@@ -1,0 +1,33 @@
+{
+    "name": "sakydev/boring",
+    "description": "Simple headless CMS for modern world",
+    "license": "GNU",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.10",
+        "illuminate/support": "^10.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sakydev\\Boring\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Saqib Razzaq"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sakydev\\Boring\\Providers\\BoringServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "minimum-stability": "dev",
+        "prefer-stable": true
+    }
+}
