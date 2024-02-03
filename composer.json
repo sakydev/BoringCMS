@@ -10,7 +10,10 @@
     "autoload": {
         "psr-4": {
             "Sakydev\\Boring\\": "src/"
-        }
+        },
+        "files": [
+            "utils/helpers.php"
+        ]
     },
     "authors": [
         {
