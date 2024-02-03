@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fields', function (Blueprint $table) {
-            $table->id('id');
+        Schema::create('collections', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->string('field_type');
-            $table->boolean('is_required');
+            $table->string('slug');
+            $table->unsignedBigInteger('blueprint_id');
             $table->timestamps();
+
+            $table->foreign('blueprint_id')
+                ->references('id')
+                ->on('blueprints')
+                ->onDelete('cascade');
         });
     }
 
@@ -25,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fields');
+        Schema::dropIfExists('collections');
     }
 };

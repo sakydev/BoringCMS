@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('field_values', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('field_id');
-            $table->text('text_value')->nullable();
+            $table->unsignedBigInteger('collection_id');
+            $table->string('short_text_value');
+            $table->text('long_text_value')->nullable();
             $table->text('rich_text_value')->nullable();
             $table->decimal('numeric_value')->nullable();
             $table->date('date_value')->nullable();
@@ -25,6 +27,11 @@ return new class extends Migration
             $table->foreign('field_id')
                 ->references('id')
                 ->on('fields')
+                ->onDelete('cascade');
+
+            $table->foreign('collection_id')
+                ->references('id')
+                ->on('collections')
                 ->onDelete('cascade');
         });
     }
