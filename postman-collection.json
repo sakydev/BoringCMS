@@ -1,0 +1,1312 @@
+{
+	"info": {
+		"_postman_id": "c319f0e6-2685-4f86-aec3-8259e7d1afeb",
+		"name": "Boring",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3616667"
+	},
+	"item": [
+		{
+			"name": "forms",
+			"item": [
+				{
+					"name": "form-responses",
+					"item": [
+						{
+							"name": "create response",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/forms/{{form}}/responses",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"forms",
+										"{{form}}",
+										"responses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list responses",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/forms/{{form}}/responses",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"forms",
+										"{{form}}",
+										"responses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get single response",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/forms/{{form}}/responses/{{responseId}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"forms",
+										"{{form}}",
+										"responses",
+										"{{responseId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete single response",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/forms/{{form}}/responses/{{responseId}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"forms",
+										"{{form}}",
+										"responses",
+										"{{responseId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "delete form",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/forms",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"forms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list forms",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/forms",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"forms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single form",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/forms/{{form}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"forms",
+								"{{form}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single form",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/forms/{{form}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"forms",
+								"{{form}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single form",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/forms/{{form}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"forms",
+								"{{form}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "fieldsets",
+			"item": [
+				{
+					"name": "fieldset-items",
+					"item": [
+						{
+							"name": "create fieldset item",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/field-sets/{{set}}/items",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"field-sets",
+										"{{set}}",
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list fieldset items",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/field-sets/{{set}}/items",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"field-sets",
+										"{{set}}",
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get fieldset item",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/field-sets/{{set}}/items/{{item}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"field-sets",
+										"{{set}}",
+										"items",
+										"{{item}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update fieldset item",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/field-sets/{{set}}/items/{{item}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"field-sets",
+										"{{set}}",
+										"items",
+										"{{item}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete fieldset item",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/field-sets/{{set}}/items/{{item}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"field-sets",
+										"{{set}}",
+										"items",
+										"{{item}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create fieldset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/field-sets",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"field-sets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list field sets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/field-sets",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"field-sets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single fieldset",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/field-sets/{{set}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"field-sets",
+								"{{set}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single fieldset",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/field-sets/{{set}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"field-sets",
+								"{{set}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single fieldset",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/field-sets/{{set}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"field-sets",
+								"{{set}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blueprints",
+			"item": [
+				{
+					"name": "create a blueprint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/blueprints",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"blueprints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all blueprints",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/blueprints",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"blueprints"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single blueprint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/blueprints/{{blueprint}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"blueprints",
+								"{{blueprint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single blueprint",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/blueprints/{{blueprint}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"blueprints",
+								"{{blueprint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a blueprint",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/blueprints/{{blueprint}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"blueprints",
+								"{{blueprint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "taxonomies",
+			"item": [
+				{
+					"name": "taxonomy-terms",
+					"item": [
+						{
+							"name": "create taxonomy term",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/taxonomies/{{taxonomy}}/terms",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"taxonomies",
+										"{{taxonomy}}",
+										"terms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list taxonomy terms",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/taxonomies/{{taxonomy}}/terms",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"taxonomies",
+										"{{taxonomy}}",
+										"terms"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get single taxonomy term",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/taxonomies/{{taxonomy}}/terms/{{term}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"taxonomies",
+										"{{taxonomy}}",
+										"terms",
+										"{{term}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update single taxonomy term",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/taxonomies/{{taxonomy}}/terms/{{term}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"taxonomies",
+										"{{taxonomy}}",
+										"terms",
+										"{{term}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete single taxonomy entry",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/taxonomies/{{taxonomy}}/terms/{{term}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"taxonomies",
+										"{{taxonomy}}",
+										"terms",
+										"{{term}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create taxonomy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/taxonomies",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"taxonomies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list taxonomies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/taxonomies",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"taxonomies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single taxonomy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/taxonomies/{{taxonomy}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"taxonomies",
+								"{{taxonomy}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single taxonomy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/taxonomies/{{taxonomy}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"taxonomies",
+								"{{taxonomy}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single taxonomy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/taxonomies/{{taxonomy}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"taxonomies",
+								"{{taxonomy}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "folders",
+			"item": [
+				{
+					"name": "folder-items",
+					"item": [
+						{
+							"name": "create folder item (folder or file)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/folders/{{folder}}/items",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"folders",
+										"{{folder}}",
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list folder items",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/folders/{{folder}}/items",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"folders",
+										"{{folder}}",
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete single folder item",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/folders/{{folder}}/items/{{item}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"folders",
+										"{{folder}}",
+										"items",
+										"{{item}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create folder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/folders",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"folders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list folders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/folders",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"folders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single folder",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/folders/{{folder}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"folders",
+								"{{folder}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single folder",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/folders/{{folder}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"folders",
+								"{{folder}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single folder",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/folders/{{folder}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"folders",
+								"{{folder}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "collections",
+			"item": [
+				{
+					"name": "collection-entries",
+					"item": [
+						{
+							"name": "create collection entry",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/collections/{{collection}}/entries",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"collections",
+										"{{collection}}",
+										"entries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list collection entries",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/collections/{{collection}}/entries",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"collections",
+										"{{collection}}",
+										"entries"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get single collection entry",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/collections/{{collection}}/entries/{{entry}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"collections",
+										"{{collection}}",
+										"entries",
+										"{{entry}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update single collection entry",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/collections/{{collection}}/entries/{{entry}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"collections",
+										"{{collection}}",
+										"entries",
+										"{{entry}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete single collection entry",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/collections/{{collection}}/entries/{{entry}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"collections",
+										"{{collection}}",
+										"entries",
+										"{{entry}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create collection",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/collections",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list collections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/collections",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single collection",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/collections/{{collection}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"collections",
+								"{{collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single collection",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/collections/{{collection}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"collections",
+								"{{collection}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single collection",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/collections/{{collection}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"collections",
+								"{{collection}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "containers",
+			"item": [
+				{
+					"name": "container-items",
+					"item": [
+						{
+							"name": "create container item (folder or file)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/containers/{{container}}/items",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"containers",
+										"{{container}}",
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list container items",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/containers/{{container}}/items",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"containers",
+										"{{container}}",
+										"items"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete single container item",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{boring}}/containers/{{container}}/items/{{item}}",
+									"host": [
+										"{{boring}}"
+									],
+									"path": [
+										"containers",
+										"{{container}}",
+										"items",
+										"{{item}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create container",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/containers",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"containers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list containers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/containers",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"containers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single container",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/containers/{{container}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"containers",
+								"{{container}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update single container",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/containers/{{container}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"containers",
+								"{{container}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete single container",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/containers/{{container}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"containers",
+								"{{container}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "create account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/auth/register",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/auth/login",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "settings",
+			"item": [
+				{
+					"name": "create new setting",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/settings",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list settings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/settings",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get single setting",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/settings/{{setting}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"settings",
+								"{{setting}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update setting",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/settings",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete setting",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{boring}}/settings/{{setting}}",
+							"host": [
+								"{{boring}}"
+							],
+							"path": [
+								"settings",
+								"{{setting}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
