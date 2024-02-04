@@ -58,3 +58,8 @@ create_controller:						## Create controller inside package
 create_model:							## Create model inside package
 	@$(SAIL) php artisan make:model $(firstword $(filter-out $@,$(MAKECMDGOALS))) --path=packages/sakydev/boring/src/Models
 
+
+.PHONY: seed
+seed:							## Run package seeders
+	@$(SAIL) php artisan db:seed  --class=Sakydev\\Boring\\Database\\Seeders\\BoringSeeder
+
