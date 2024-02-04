@@ -11,6 +11,7 @@ class Form extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'slug'];
     /**
      * Create a new factory instance for the model.
      */
