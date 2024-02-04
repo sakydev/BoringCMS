@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('field_values', function (Blueprint $table) {
             $table->id('id');
             $table->unsignedBigInteger('field_id');
-            $table->unsignedBigInteger('collection_id');
+            $table->unsignedBigInteger('collection_item_id');
             $table->string('short_text_value');
             $table->text('long_text_value')->nullable();
             $table->text('rich_text_value')->nullable();
@@ -29,9 +29,9 @@ return new class extends Migration
                 ->on('fields')
                 ->onDelete('cascade');
 
-            $table->foreign('collection_id')
+            $table->foreign('collection_item_id')
                 ->references('id')
-                ->on('collections')
+                ->on('collection_items')
                 ->onDelete('cascade');
         });
     }
