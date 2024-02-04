@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('blueprint_id');
             $table->string('name');
             $table->string('slug');
-            $table->unsignedBigInteger('blueprint_id');
             $table->timestamps();
 
             $table->foreign('blueprint_id')
