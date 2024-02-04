@@ -10,11 +10,11 @@ class FormResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $request->id,
+            'id' => $this->id,
             'name' => $this->name,
             'slug' => $this->slug,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created' => $this->created_at,
+            'updated' => $this->updated_at,
         ];
     }
 }

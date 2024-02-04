@@ -17,7 +17,7 @@ class SuccessResponse extends JsonResponse
             [
                 'status' => 'success',
                 'message' => __($message),
-                'data' => $data,
+                'content' => $data,
             ],
             $status,
             $headers,
