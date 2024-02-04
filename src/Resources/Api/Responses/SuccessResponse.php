@@ -16,7 +16,7 @@ class SuccessResponse extends JsonResponse
         parent::__construct(
             [
                 'status' => 'success',
-                'message' => __($message),
+                'message' => phrase($message),
                 'content' => $data,
             ],
             $status,

@@ -30,14 +30,13 @@ class FormController extends Controller
         try {
             $form = $this->formRepository->store($createRequest->validated());
 
-            return new SuccessResponse('Form created', [
+            return new SuccessResponse('forms.success.store.single', [
                 'form' => new FormResource($form),
             ], Response::HTTP_CREATED);
         } catch (Throwable $throwable) {
-            dd($throwable);
             Log::error('Create form failed', ['error' => $throwable->getMessage()]);
 
-            return new ExceptionErrorResponse('form.failed.create.unknown');
+            return new ExceptionErrorResponse(phrase('forms.failed.store.unknown'));
         }
     }
 }
