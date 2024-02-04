@@ -31,7 +31,7 @@ return new class extends Migration
 
             $table->foreign('collection_item_id')
                 ->references('id')
-                ->on('collection_items')
+                ->on('collection_entries')
                 ->onDelete('cascade');
         });
     }
