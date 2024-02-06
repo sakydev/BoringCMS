@@ -15,13 +15,15 @@ class FormCreateRequest extends FormRequest
                 'string',
                 'min:3',
                 'max:50',
-                /*Rule::unique('folders', 'name')->where(function ($query) use ($userId) {
-                    return $query->where('user_id', $userId);
-                }),*/
+                'regex:/^[0-9a-z\s]+$/i',
+                'unique:forms,name',
             ],
             'slug' => [
+                'min:3',
+                'max:100',
                 'required',
-                'unique:forms'
+                'regex:/^[0-9a-z_-]+$/i',
+                'unique:forms,slug',
             ]
         ];
     }
