@@ -11,6 +11,11 @@ class BoringServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(boringPath('routes/api.php'));
         $this->loadMigrationsFrom(boringPath('migrations'));
         $this->loadViewsFrom(boringPath('resources/views'), 'boring');
+
+        $this->loadJsonTranslationsFrom(boringPath('lang'));
+
+        /*$this->app['router']
+            ->aliasMiddleware('with.json', WithJsonMiddleware::class);*/
     }
 }
 

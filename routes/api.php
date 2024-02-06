@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Sakydev\Boring\Http\Controllers\Api\StatusController;
 
-Route::prefix('api')->group(function() {
+Route::prefix('api')->middleware([])->group(function() {
     Route::get('/status/{item}', [StatusController::class, 'status']);
 
     Route::group([], boringPath('routes/api-group/auth.php'));
