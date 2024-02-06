@@ -5,7 +5,7 @@ namespace Sakydev\Boring\Http\Requests\Api;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class FormCreateRequest extends FormRequest
+class CreateFormRequest extends FormRequest
 {
     public function rules()
     {
@@ -19,9 +19,10 @@ class FormCreateRequest extends FormRequest
                 'unique:forms,name',
             ],
             'slug' => [
+                'required',
+                'string',
                 'min:3',
                 'max:100',
-                'required',
                 'regex:/^[0-9a-z_-]+$/i',
                 'unique:forms,slug',
             ]

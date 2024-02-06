@@ -8,7 +8,7 @@ class ExceptionErrorResponse extends ErrorResponse
 {
     public function __construct(array|string $error, array $headers = [], int $options = 0) {
         parent::__construct(
-            $error,
+            is_array($error) ? $error : phrase($error),
             Response::HTTP_INTERNAL_SERVER_ERROR,
             $headers,
             $options,

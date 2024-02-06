@@ -5,7 +5,7 @@ namespace Sakydev\Boring\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
-use Sakydev\Boring\Http\Requests\Api\FormCreateRequest;
+use Sakydev\Boring\Http\Requests\Api\CreateFormRequest;
 use Sakydev\Boring\Models\Form;
 use Sakydev\Boring\Repositories\FormRepository;
 use Sakydev\Boring\Resources\Api\FormResource;
@@ -26,7 +26,7 @@ class FormController extends Controller
         return new JsonResponse($results, Response::HTTP_OK);
     }
 
-    public function store(FormCreateRequest $createRequest): SuccessResponse|ErrorResponse {
+    public function store(CreateFormRequest $createRequest): SuccessResponse|ErrorResponse {
         try {
             $form = $this->formRepository->store($createRequest->validated());
 
@@ -36,7 +36,7 @@ class FormController extends Controller
         } catch (Throwable $throwable) {
             Log::error('Create form failed', ['error' => $throwable->getMessage()]);
 
-            return new ExceptionErrorResponse(phrase('forms.failed.store.unknown'));
+            return new ExceptionErrorResponse('forms.failed.store.unknown');
         }
     }
 }

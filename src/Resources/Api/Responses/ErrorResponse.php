@@ -11,7 +11,7 @@ class ErrorResponse extends JsonResponse
         parent::__construct(
             [
                 'status' => 'error',
-                'errors' => is_array($error) ? $error : [__($error)],
+                'errors' => is_array($error) ? $error : [phrase($error)],
             ],
             $status,
             $headers,
