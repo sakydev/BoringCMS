@@ -17,19 +17,13 @@ class CreateFormTest extends TestCase
     private const VALID_NAME = 'Test Form';
     private const VALID_SLUG = 'test-slug-here';
 
-    private array $headers = [
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json',
-    ];
-
     public function testCreateForm(): void {
         $requestContent = [
             'name' => self::VALID_NAME,
             'slug' => self::VALID_SLUG,
         ];
 
-        $response = $this->withHeaders($this->headers)
-            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+        $response = $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
@@ -61,8 +55,7 @@ class CreateFormTest extends TestCase
 
         Form::factory()->create($requestContent);
 
-        $response = $this->withHeaders($this->headers)
-            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+        $response = $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure([
@@ -79,8 +72,7 @@ class CreateFormTest extends TestCase
      */
     public function testFormValidation(array $requestContent, array $expectedJsonStructure): void
     {
-        $response = $this->withHeaders($this->headers)
-            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+        $response = $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure($expectedJsonStructure);
