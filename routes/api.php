@@ -6,7 +6,7 @@ use Sakydev\Boring\Http\Controllers\Api\StatusController;
 Route::prefix('api')->middleware([])->group(function() {
     Route::get('/status/{item}', [StatusController::class, 'status']);
 
-    Route::group([], boringPath('routes/api-group/auth.php'));
+    Route::group([], boringPath('routes/api-group/account.php'));
     Route::group([], boringPath('routes/api-group/blueprint.php'));
     Route::group([], boringPath('routes/api-group/collection.php'));
     Route::group([], boringPath('routes/api-group/container.php'));
