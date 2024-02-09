@@ -17,6 +17,7 @@ use Throwable;
 class RegisterController extends Controller
 {
     public function __construct(readonly BoringUserRepository $userRepository) {}
+
     public function store(RegisterUserRequest $createRequest): SuccessResponse|ErrorResponse {
         try {
             $requestContent = $createRequest->validated();
