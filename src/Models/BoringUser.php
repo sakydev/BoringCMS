@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,5 +23,9 @@ class BoringUser extends Authenticatable
     protected static function newFactory(): Factory
     {
         return BoringUserFactory::new();
+    }
+
+    public function forms(): HasMany {
+        return $this->hasMany(Form::class, 'user_id', 'id');
     }
 }

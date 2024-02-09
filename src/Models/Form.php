@@ -11,12 +11,18 @@ class Form extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['user_id', 'name', 'slug'];
     /**
      * Create a new factory instance for the model.
      */
     protected static function newFactory(): Factory
     {
         return FormFactory::new();
+    }
+
+    public function user()
+    {
+        // A form belongs to a user with explicit foreign key and local key
+        return $this->belongsTo(BoringUser::class, 'user_id', 'id');
     }
 }
