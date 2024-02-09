@@ -23,7 +23,7 @@ class RegisterUserRequest extends FormRequest
                 'email',
                 'min:3',
                 'max:100',
-                'unique:boring_users,email',
+                'unique:users,email',
             ],
             'password' => [
                 'required',

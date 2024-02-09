@@ -15,11 +15,11 @@ class LoginBoringUserTest extends TestCase
 
     private const LOGIN_ACCOUNT_ENDPOINT = '/api/account/login';
     private const VALID_EMAIL = 'snow@wall.com';
-    private const VALID_PASSWORD = 'HelloWorld';
+    private const VALID_PASSWORD = 'snowworld';
 
     public function testLoginAccount(): void {
         $requestContent = [
-            'email' =>self::VALID_EMAIL,
+            'email' => self::VALID_EMAIL,
             'password' => self::VALID_PASSWORD,
         ];
 
@@ -27,7 +27,7 @@ class LoginBoringUserTest extends TestCase
 
         $response = $this->postJson(self::LOGIN_ACCOUNT_ENDPOINT, $requestContent);
 
-        $response->assertStatus(Response::HTTP_CREATED)
+        $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
                 'status',
                 'message',
@@ -46,7 +46,6 @@ class LoginBoringUserTest extends TestCase
         $responseContent = $response->json();
         $userContent = $responseContent['content']['user'];
 
-        $this->assertEquals($requestContent['name'], $userContent['name']);
         $this->assertEquals($requestContent['email'], $userContent['email']);
         $this->assertNotEmpty($userContent['auth_token']);
     }
@@ -65,25 +64,8 @@ class LoginBoringUserTest extends TestCase
         $response->assertStatus(Response::HTTP_UNAUTHORIZED)
             ->assertJsonStructure([
                 'status',
-                'message',
-                'content' => [
-                    'user' => [
-                        'id',
-                        'name',
-                        'email',
-                        'auth_token',
-                        'created',
-                        'updated',
-                    ],
-                ],
+                'errors',
             ]);
-
-        $responseContent = $response->json();
-        $userContent = $responseContent['content']['user'];
-
-        $this->assertEquals($requestContent['name'], $userContent['name']);
-        $this->assertEquals($requestContent['email'], $userContent['email']);
-        $this->assertNotEmpty($userContent['auth_token']);
     }
 
     /**

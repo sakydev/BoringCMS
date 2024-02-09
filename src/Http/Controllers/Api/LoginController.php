@@ -25,8 +25,7 @@ class LoginController extends Controller
 
     public function login(LoginUserRequest $loginRequest): SuccessResponse|ErrorResponse {
         try {
-            dd(config('auth'));
-            if (Auth::attempt($loginRequest->only('email', 'password'))) {
+            if (Auth::attempt($loginRequest->only(['email', 'password']))) {
 
                 $token = auth()->user()->createToken('auth_token')->plainTextToken;
                 $user = $this->userRepository->getByEmail($loginRequest->email);

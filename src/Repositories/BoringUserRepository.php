@@ -11,7 +11,7 @@ class BoringUserRepository
     }
 
     public function getByEmail(string $email): ?BoringUser {
-        return (new BoringUser())->where('email', $email)->get();
+        return (new BoringUser())->where('email', $email)->first();
     }
 
     public function store(array $userData): BoringUser {
