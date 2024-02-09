@@ -15,7 +15,7 @@ class LoginBoringUserTest extends TestCase
 
     private const LOGIN_ACCOUNT_ENDPOINT = '/api/account/login';
     private const VALID_EMAIL = 'snow@wall.com';
-    private const VALID_PASSWORD = 'snowworld';
+    private const VALID_PASSWORD = 'password_123';
 
     public function testLoginAccount(): void {
         $requestContent = [

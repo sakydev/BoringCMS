@@ -3,6 +3,7 @@
 namespace Feature\Api\Forms;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Sakydev\Boring\Models\BoringUser;
 use Sakydev\Boring\Models\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\CreatesApplication;
@@ -18,12 +19,14 @@ class CreateFormTest extends TestCase
     private const VALID_SLUG = 'test-slug-here';
 
     public function testCreateForm(): void {
+        $requestUser = BoringUser::factory()->createOne();
         $requestContent = [
             'name' => self::VALID_NAME,
             'slug' => self::VALID_SLUG,
         ];
 
-        $response = $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+        $response = $this->actingAs($requestUser)
+            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
@@ -48,6 +51,7 @@ class CreateFormTest extends TestCase
     }
 
     public function testTryCreateFormWithDuplicateValues(): void {
+        $requestUser = BoringUser::factory()->createOne();
         $requestContent = [
             'name' => self::VALID_NAME,
             'slug' => self::VALID_SLUG,
@@ -55,7 +59,8 @@ class CreateFormTest extends TestCase
 
         Form::factory()->create($requestContent);
 
-        $response = $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+        $response = $this->actingAs($requestUser)
+            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure([
@@ -67,12 +72,27 @@ class CreateFormTest extends TestCase
             ]);
     }
 
+    public function testTryCreateFormWithoutAuthentication(): void {
+        $requestContent = [
+            'name' => self::VALID_NAME,
+            'slug' => self::VALID_SLUG,
+        ];
+
+        Form::factory()->create($requestContent);
+
+        $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent)
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
     /**
      * @dataProvider formValidationDataProvider
      */
     public function testFormValidation(array $requestContent, array $expectedJsonStructure): void
     {
-        $response = $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+        $requestUser = BoringUser::factory()->createOne();
+        $response = $this
+            ->actingAs($requestUser)
+            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure($expectedJsonStructure);
