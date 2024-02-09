@@ -15,6 +15,7 @@ class RegisterUserRequest extends FormRequest
                 'string',
                 'min:3',
                 'max:50',
+                'regex:/^[0-9a-z\s]+$/i'
             ],
             'email' => [
                 'required',
