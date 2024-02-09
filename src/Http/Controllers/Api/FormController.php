@@ -27,6 +27,22 @@ class FormController extends Controller
         return new JsonResponse($results, Response::HTTP_OK);
     }
 
+    public function show($slug): SuccessResponse|ErrorResponse {
+        try {
+            $form = $this->formRepository->getBySlug($slug);
+            if (!$form) {
+                return new ErrorResponse('forms.failed.find.single', Response::HTTP_NOT_FOUND);
+            }
+
+            return new SuccessResponse('forms.success.find.single', [
+                'form' => new FormResource($form),
+            ], Response::HTTP_OK);
+        } catch (Throwable $throwable) {
+            Log::error('Fetch form failed', ['error' => $throwable->getMessage()]);
+
+            return new ExceptionErrorResponse('forms.failed.find.unknown');
+        }
+    }
     public function store(CreateFormRequest $createRequest): SuccessResponse|ErrorResponse {
         try {
             $form = $this->formRepository->store($createRequest->validated(), Auth::id());
