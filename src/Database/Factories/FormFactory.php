@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Database\Factories;
 
+use Sakydev\Boring\Models\BoringUser;
 use Sakydev\Boring\Models\Form;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,7 @@ class FormFactory extends Factory
         return [
             'name' => fake()->name(),
             'slug' => fake()->slug(10),
+            'user_id' => BoringUser::factory()->createOne()->id,
         ];
     }
 }

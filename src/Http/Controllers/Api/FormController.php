@@ -4,6 +4,7 @@ namespace Sakydev\Boring\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Sakydev\Boring\Http\Requests\Api\CreateFormRequest;
 use Sakydev\Boring\Models\Form;
@@ -28,7 +29,7 @@ class FormController extends Controller
 
     public function store(CreateFormRequest $createRequest): SuccessResponse|ErrorResponse {
         try {
-            $form = $this->formRepository->store($createRequest->validated());
+            $form = $this->formRepository->store($createRequest->validated(), Auth::id());
 
             return new SuccessResponse('forms.success.store.single', [
                 'form' => new FormResource($form),

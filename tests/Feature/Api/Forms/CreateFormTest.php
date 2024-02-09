@@ -46,6 +46,7 @@ class CreateFormTest extends TestCase
         $responseContent = $response->json();
         $formContent = $responseContent['content']['form'];
 
+        $this->assertEquals($requestUser->id, $formContent['id']);
         $this->assertEquals($requestContent['name'], $formContent['name']);
         $this->assertEquals($requestContent['slug'], $formContent['slug']);
     }
@@ -77,8 +78,6 @@ class CreateFormTest extends TestCase
             'name' => self::VALID_NAME,
             'slug' => self::VALID_SLUG,
         ];
-
-        Form::factory()->create($requestContent);
 
         $this->postJson(self::CREATE_FORM_ENDPOINT, $requestContent)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
