@@ -12,6 +12,7 @@ class BoringUser extends Model
 {
     use HasFactory, HasApiTokens;
 
+    protected $table = 'boring_users';
     protected $fillable = ['name', 'email', 'password'];
     /**
      * Create a new factory instance for the model.

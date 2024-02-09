@@ -25,6 +25,7 @@ class LoginController extends Controller
 
     public function login(LoginUserRequest $loginRequest): SuccessResponse|ErrorResponse {
         try {
+            dd(config('auth'));
             if (Auth::attempt($loginRequest->only('email', 'password'))) {
 
                 $token = auth()->user()->createToken('auth_token')->plainTextToken;
@@ -39,9 +40,10 @@ class LoginController extends Controller
 
             return new ErrorResponse(
                 'users.failed.login.credentials',
-                Response::HTTP_FORBIDDEN
+                Response::HTTP_UNAUTHORIZED
             );
         } catch (Throwable $throwable) {
+            dd($throwable);
             Log::error('User login failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('users.failed.login.unknown');

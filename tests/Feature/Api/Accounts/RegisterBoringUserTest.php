@@ -4,7 +4,6 @@ namespace Feature\Api\Accounts;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Sakydev\Boring\Models\BoringUser;
-use Sakydev\Boring\Models\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\CreatesApplication;
 use Tests\TestCase;

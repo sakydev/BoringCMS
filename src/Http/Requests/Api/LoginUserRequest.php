@@ -13,11 +13,15 @@ class LoginUserRequest extends FormRequest
             'email' => [
                 'required',
                 'string',
-                'email,exists:boring_users,email',
+                'email',
+                'min:3',
+                'max:50',
             ],
             'password' => [
                 'required',
                 'string',
+                'min:6',
+                'max:100',
             ]
         ];
     }
