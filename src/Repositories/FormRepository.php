@@ -18,6 +18,8 @@ class FormRepository
         $form = new Form();
 
         $form->fill($formData);
+        $form->user_id = $userId;
+
         $form->save();
 
         return $form;
