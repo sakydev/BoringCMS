@@ -46,7 +46,7 @@ class CreateFormTest extends TestCase
         $responseContent = $response->json();
         $formContent = $responseContent['content']['form'];
 
-        $this->assertEquals($requestUser->id, $formContent['id']);
+        $this->assertEquals($requestUser->id, $formContent['user_id']);
         $this->assertEquals($requestContent['name'], $formContent['name']);
         $this->assertEquals($requestContent['slug'], $formContent['slug']);
     }
