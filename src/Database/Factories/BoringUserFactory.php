@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Database\Factories;
 
+use Illuminate\Support\Facades\Hash;
 use Sakydev\Boring\Models\BoringUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,6 +18,16 @@ class BoringUserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->email(),
+            'password' => Hash::make(fake()->password())
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterMaking(function (BoringUser $user) {
+            if (Hash::needsRehash($user->password)) {
+                $user->password = Hash::make($user->password);
+            }
+        });
     }
 }
