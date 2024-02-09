@@ -18,7 +18,7 @@ class BoringUserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->email(),
-            'password' => Hash::make(fake()->password())
+            'password' => fake()->password()
         ];
     }
 
