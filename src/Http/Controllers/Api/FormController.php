@@ -4,6 +4,7 @@ namespace Sakydev\Boring\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Sakydev\Boring\Http\Requests\Api\CreateFormRequest;
@@ -20,11 +21,24 @@ class FormController extends Controller
 {
     public function __construct(readonly FormRepository $formRepository) {}
 
-    public function index(): JsonResponse {
-        $forms = new Form();
-        $results = $forms->all();
+    public function index(Request $request): SuccessResponse|ErrorResponse {
+        try {
+            $page = $request->query('page', 1);
+            $limit = $request->query('limit', 20);
 
-        return new JsonResponse($results, Response::HTTP_OK);
+            $page = max(1, (int)$page);
+            $limit = max(1, min(100, (int)$limit));
+
+            $forms = $this->formRepository->listByUserId(Auth::id(), $page, $limit);
+
+            return new SuccessResponse('forms.success.find.list', [
+                'forms' => FormResource::collection($forms),
+            ], Response::HTTP_OK);
+        } catch (Throwable $throwable) {
+            Log::error('List forms failed', ['error' => $throwable->getMessage()]);
+
+            return new ExceptionErrorResponse('forms.failed.find.unknown');
+        }
     }
 
     public function show($slug): SuccessResponse|ErrorResponse {
@@ -46,6 +60,7 @@ class FormController extends Controller
             return new ExceptionErrorResponse('forms.failed.find.unknown');
         }
     }
+
     public function store(CreateFormRequest $createRequest): SuccessResponse|ErrorResponse {
         try {
             $form = $this->formRepository->store($createRequest->validated(), Auth::id());
