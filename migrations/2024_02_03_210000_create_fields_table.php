@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('fields', function (Blueprint $table) {
-            $table->id('id');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('blueprint_id')->nullable();
             $table->unsignedBigInteger('set_id')->nullable();
             $table->string('name');
@@ -20,6 +21,11 @@ return new class extends Migration
             $table->string('field_type');
             $table->boolean('is_required');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('blueprint_id')
                 ->references('id')
