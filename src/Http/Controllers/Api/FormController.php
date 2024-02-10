@@ -29,9 +29,12 @@ class FormController extends Controller
 
     public function show($slug): SuccessResponse|ErrorResponse {
         try {
-            $form = $this->formRepository->getBySlug($slug);
+            $form = $this->formRepository->getBySlugAndUserId($slug, Auth::id());
             if (!$form) {
-                return new ErrorResponse('forms.failed.find.single', Response::HTTP_NOT_FOUND);
+                return new ErrorResponse(
+                    'forms.failed.find.single',
+                    Response::HTTP_NOT_FOUND
+                );
             }
 
             return new SuccessResponse('forms.success.find.single', [

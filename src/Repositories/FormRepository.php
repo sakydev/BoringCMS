@@ -14,6 +14,10 @@ class FormRepository
         return (new Form())->where('slug', $slug)->first();
     }
 
+    public function getBySlugAndUserId(string $slug, int $userId): ?Form {
+        return (new Form())->where('slug', $slug)->where('user_id', $userId)->first();
+    }
+
     public function store(array $formData): Form {
         $form = new Form();
 

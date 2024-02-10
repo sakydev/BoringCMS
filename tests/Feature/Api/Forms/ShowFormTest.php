@@ -3,6 +3,7 @@
 namespace Feature\Api\Forms;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Sakydev\Boring\Models\BoringUser;
 use Sakydev\Boring\Models\Form;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\CreatesApplication;
@@ -16,10 +17,11 @@ class ShowFormTest extends TestCase
     private const SHOW_FORM_ENDPOINT = '/api/forms/%s';
 
     public function testShowForm(): void {
-        $created = Form::factory()->create();
-        $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->slug);
+        $requestUser = BoringUser::factory()->createOne();
+        $created = Form::factory()->create(['user_id' => $requestUser->id]);
 
-        $response = $this->getJson($requestUrl);
+        $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->slug);
+        $response = $this->actingAs($requestUser)->getJson($requestUrl);
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
@@ -45,18 +47,20 @@ class ShowFormTest extends TestCase
     }
 
     public function testTryShowFormWithId(): void {
-        $created = Form::factory()->create();
-        $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->id);
+        $requestUser = BoringUser::factory()->createOne();
+        $created = Form::factory()->create(['user_id' => $requestUser->id]);
 
-        $response = $this->getJson($requestUrl);
+        $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->id);
+        $response = $this->actingAs($requestUser)->getJson($requestUrl);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function testTryShowFormWithInvalidSlug(): void {
+        $requestUser = BoringUser::factory()->createOne();
         $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, 'invalid-slug');
 
-        $response = $this->getJson($requestUrl);
+        $response = $this->actingAs($requestUser)->getJson($requestUrl);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
