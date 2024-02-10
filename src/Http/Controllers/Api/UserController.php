@@ -21,13 +21,13 @@ class UserController extends Controller
         try {
             $user = $this->userRepository->getById(Auth::id());
 
-            return new SuccessResponse('users.success.login', [
+            return new SuccessResponse('item.success.findOne', [
                 'user' => new BoringUserResource($user),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
             Log::error('User show failed', ['error' => $throwable->getMessage()]);
 
-            return new ExceptionErrorResponse('users.failed.login.unknown');
+            return new ExceptionErrorResponse('general.error.unknown');
         }
     }
 }

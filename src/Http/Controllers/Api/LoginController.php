@@ -26,20 +26,20 @@ class LoginController extends Controller
                 $user = $this->userRepository->getByEmail($loginRequest->email);
                 $user->auth_token = $token;
 
-                return new SuccessResponse('users.success.login', [
+                return new SuccessResponse('auth.success.login', [
                     'user' => new BoringUserResource($user),
                 ], Response::HTTP_OK);
             }
 
 
             return new ErrorResponse(
-                'users.failed.login.credentials',
+                'auth.error.invalidCredentials',
                 Response::HTTP_UNAUTHORIZED
             );
         } catch (Throwable $throwable) {
             Log::error('User login failed', ['error' => $throwable->getMessage()]);
 
-            return new ExceptionErrorResponse('users.failed.login.unknown');
+            return new ExceptionErrorResponse('general.error.unknown');
         }
     }
 }

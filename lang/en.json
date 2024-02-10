@@ -1,46 +1,41 @@
 {
-    "forms": {
-        "failed": {
-            "find": {
-                "single": "Form not found",
-                "permissions": "User has insufficient permissions to view form",
-                "unknown": "Something went wrong trying to find form"
-            },
-            "update": {
-                "already": {
-                    "published": "Requested form is already published",
-                    "unpublished": "Requested form is already unpublished"
-                },
-                "permissions": "User has insufficient permissions to update form",
-                "unknown": "Something went wrong trying to update form"
-            },
-            "store": {
-                "permissions": "User has insufficient permissions to create form",
-                "unknown": "Something went wrong trying to create form"
-            },
-            "delete": {
-                "permissions": "User has insufficient permissions to delete form",
-                "unknown": "Something went wrong trying to delete form"
-            }
+    "auth": {
+        "error": {
+            "invalidCredentials": "User provided invalid credentials"
         },
         "success": {
-            "find": {
-                "single": "Form fetched successfully",
-                "list": "Forms have been fetched successfully"
-            },
-            "update": {
-                "single": "Form has been updated successfully",
-                "list": "Forms have been updated successfully",
-                "publish": "Form has been published successfully",
-                "unpublish": "Form has been unpublished successfully"
-            },
-            "store": {
-                "single": "Form has been created successfully"
-            },
-            "delete": {
-                "single": "Form has been deleted successfully",
-                "list": "Forms have been deleted successfully"
-            }
+            "login": "User logged in successfully",
+            "registerMany": "Users registered successfully",
+            "registerOne": "User registered successfully"
+        }
+    },
+    "general": {
+        "error": {
+            "unknown": "Something went wrong"
+        }
+    },
+    "item": {
+        "error": {
+            "alreadyPublished": "Item already published",
+            "alreadyUnpublished": "Item is already unpublished",
+            "invalidAccessPermissions": "User has insufficient permissions to access item",
+            "invalidCreatePermissions": "User has insufficient permissions to create item",
+            "invalidUpdatePermissions": "User has insufficient permissions to update item",
+            "notFound": "Item not found"
+        },
+        "success": {
+            "createMany": "Items created successfully",
+            "createSingle": "Item created successfully",
+            "destroyMany": "Items deleted successfully",
+            "destroySingle": "Item deleted successfully",
+            "findMany": "Items fetched successfully",
+            "findOne": "Item fetched successfully",
+            "publishMany": "Items published successfully",
+            "publishSingle": "Item published successfully",
+            "unpublishMany": "Items unpublished successfully",
+            "unpublishSingle": "Items unpublished successfully",
+            "updateMany": "Items updated successfully",
+            "updateSingle": "Item updated successfully"
         }
     }
 }

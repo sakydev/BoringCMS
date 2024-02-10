@@ -25,13 +25,13 @@ class RegisterController extends Controller
 
             $user = $this->userRepository->store($requestContent);
 
-            return new SuccessResponse('users.success.store.single', [
+            return new SuccessResponse('auth.success.register', [
                 'user' => new BoringUserResource($user),
             ], Response::HTTP_CREATED);
         } catch (Throwable $throwable) {
             Log::error('Create user failed', ['error' => $throwable->getMessage()]);
 
-            return new ExceptionErrorResponse('users.failed.store.unknown');
+            return new ExceptionErrorResponse('general.error.unknown');
         }
     }
 }
