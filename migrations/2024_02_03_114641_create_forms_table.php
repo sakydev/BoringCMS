@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->string('name');
+            $table->string('slug');
             $table->timestamps();
+
+            $table->unique(['user_id', 'name']);
+            $table->unique(['user_id', 'slug']);
 
             $table->foreign('user_id')
                 ->references('id')

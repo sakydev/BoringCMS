@@ -51,11 +51,42 @@ class CreateFormTest extends TestCase
         $this->assertEquals($requestContent['slug'], $responseForm['slug']);
     }
 
-    public function testTryCreateFormWithDuplicateValues(): void {
+    public function testCreateFormWithDuplicateValuesForAnotherUser(): void {
+        $requestUser = BoringUser::factory()->createOne();
+        $anotherUser = BoringUser::factory()->createOne();
+        $requestContent = [
+            'name' => self::VALID_NAME,
+            'slug' => self::VALID_SLUG,
+            'user_id' => $anotherUser->id,
+        ];
+
+        Form::factory()->create($requestContent);
+
+        $response = $this->actingAs($requestUser)
+            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
+
+        $response->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure([
+                'status',
+                'message',
+                'content' => [
+                    'form' => [
+                        'id',
+                        'name',
+                        'slug',
+                        'created',
+                        'updated',
+                    ],
+                ],
+            ]);
+    }
+
+    public function testTryCreateFormWithDuplicateValuesForSameUser(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestContent = [
             'name' => self::VALID_NAME,
             'slug' => self::VALID_SLUG,
+            'user_id' => $requestUser->id,
         ];
 
         Form::factory()->create($requestContent);
