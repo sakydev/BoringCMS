@@ -46,6 +46,15 @@ class ShowFormTest extends TestCase
         $this->assertEquals($created->slug, $formContent['slug']);
     }
 
+    public function testTryShowFormWithoutAuthentication(): void {
+        $created = Form::factory()->create();
+
+        $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->id);
+        $response = $this->getJson($requestUrl);
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
     public function testTryShowFormWithId(): void {
         $requestUser = BoringUser::factory()->createOne();
         $created = Form::factory()->create(['user_id' => $requestUser->id]);
