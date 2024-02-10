@@ -41,7 +41,7 @@ class FormController extends Controller
         }
     }
 
-    public function show($slug): SuccessResponse|ErrorResponse {
+    public function show(string $slug): SuccessResponse|ErrorResponse {
         try {
             $form = $this->formRepository->getBySlugAndUserId($slug, Auth::id());
             if (!$form) {
@@ -72,6 +72,26 @@ class FormController extends Controller
             Log::error('Create form failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('forms.failed.store.unknown');
+        }
+    }
+
+    public function destroy(string $slug): SuccessResponse|ErrorResponse
+    {
+        try {
+            if (!$this->formRepository->existsBySlugAndUserId($slug, Auth::id())) {
+                return new ErrorResponse(
+                    'forms.failed.find.single',
+                    Response::HTTP_NOT_FOUND
+                );
+            }
+
+            $this->formRepository->destroyBySlugAndUserId($slug, Auth::id());
+
+            return new SuccessResponse('forms.success.delete.single', [], Response::HTTP_NO_CONTENT);
+        } catch (Throwable $throwable) {
+            Log::error('Delete form failed', ['error' => $throwable->getMessage()]);
+
+            return new ExceptionErrorResponse('forms.failed.delete.unknown');
         }
     }
 }

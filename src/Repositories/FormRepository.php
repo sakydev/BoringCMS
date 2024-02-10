@@ -2,7 +2,6 @@
 
 namespace Sakydev\Boring\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Sakydev\Boring\Models\Form;
 
@@ -16,6 +15,10 @@ class FormRepository
 
     public function getById(int $formId): ?Form {
         return (new Form())->find($formId);
+    }
+
+    public function existsBySlugAndUserId(string $slug, int $userId): bool {
+        return (new Form())->where('slug', $slug)->where('user_id', $userId)->exists();
     }
 
     public function getBySlug(string $slug): ?Form {
@@ -35,5 +38,9 @@ class FormRepository
         $form->save();
 
         return $form;
+    }
+
+    public function destroyBySlugAndUserId(string $slug, int $userId): bool {
+        return (new Form())->where('slug', $slug)->where('user_id', $userId)->delete();
     }
 }
