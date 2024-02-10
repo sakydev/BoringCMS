@@ -39,11 +39,11 @@ class ShowFormTest extends TestCase
             ]);
 
         $responseContent = $response->json();
-        $formContent = $responseContent['content']['form'];
+        $responseForm = $responseContent['content']['form'];
 
-        $this->assertEquals($created->id, $formContent['id']);
-        $this->assertEquals($created->name, $formContent['name']);
-        $this->assertEquals($created->slug, $formContent['slug']);
+        $this->assertEquals($created->id, $responseForm['id']);
+        $this->assertEquals($created->name, $responseForm['name']);
+        $this->assertEquals($created->slug, $responseForm['slug']);
     }
 
     public function testTryShowFormWithoutAuthentication(): void {

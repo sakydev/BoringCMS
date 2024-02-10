@@ -3,11 +3,12 @@
 namespace Sakydev\Boring\Repositories;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Sakydev\Boring\Models\Form;
 
 class FormRepository
 {
-    public function listByUserId(int $userId, int $page, int $limit): ?Collection
+    public function listByUserId(int $userId, int $page, int $limit): LengthAwarePaginator
     {
         return (new Form())->where('user_id', $userId)
             ->paginate($limit, ['*'], 'page', $page);

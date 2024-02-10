@@ -44,11 +44,11 @@ class CreateFormTest extends TestCase
             ]);
 
         $responseContent = $response->json();
-        $formContent = $responseContent['content']['form'];
+        $responseForm = $responseContent['content']['form'];
 
-        $this->assertEquals($requestUser->id, $formContent['user_id']);
-        $this->assertEquals($requestContent['name'], $formContent['name']);
-        $this->assertEquals($requestContent['slug'], $formContent['slug']);
+        $this->assertEquals($requestUser->id, $responseForm['user_id']);
+        $this->assertEquals($requestContent['name'], $responseForm['name']);
+        $this->assertEquals($requestContent['slug'], $responseForm['slug']);
     }
 
     public function testTryCreateFormWithDuplicateValues(): void {
