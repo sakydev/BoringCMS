@@ -17,15 +17,19 @@ return new class extends Migration
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
             $table->uuid()->default(DB::raw('uuid_generate_v4()'))->index();
-            $table->unsignedBigInteger('user_id');
-            $table->string('name');
-            $table->string('slug');
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+
+            $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
 
-            $table->unique(['user_id', 'name']);
-            $table->unique(['user_id', 'slug']);
+            $table->foreign('created_by')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
-            $table->foreign('user_id')
+            $table->foreign('updated_by')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

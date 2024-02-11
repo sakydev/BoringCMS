@@ -19,7 +19,7 @@ class DestroyFormTest extends TestCase
     public function testDestroyForm(): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        $createdForm = Form::factory()->create(['user_id' => $requestUser->id]);
+        $createdForm = Form::factory()->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::DELETE_FORM_ENDPOINT, $createdForm->slug);
         $response = $this->actingAs($requestUser)->deleteJson($requestUrl);
@@ -37,18 +37,6 @@ class DestroyFormTest extends TestCase
         $response = $this->deleteJson($requestUrl);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
-
-    public function testTryDestroyOtherUserForm(): void
-    {
-        $requestUser = BoringUser::factory()->createOne();
-        $formUser = BoringUser::factory()->createOne();
-        $createdForm = Form::factory()->create(['user_id' => $formUser->id]);
-
-        $requestUrl = sprintf(self::DELETE_FORM_ENDPOINT, $createdForm->slug);
-        $response = $this->actingAs($requestUser)->deleteJson($requestUrl);
-
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function testTryDestroyNonExistingForm(): void

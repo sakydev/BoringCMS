@@ -46,6 +46,9 @@ class CreateFieldTest extends TestCase
                         'validation',
                         'condition',
                         'is_required',
+                        'created_by',
+                        'updated_by',
+                        'created',
                         'created',
                         'updated'
                     ],

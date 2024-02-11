@@ -11,9 +11,10 @@ class FormResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
             'name' => $this->name,
             'slug' => $this->slug,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
             'created' => $this->created_at,
             'updated' => $this->updated_at,
         ];

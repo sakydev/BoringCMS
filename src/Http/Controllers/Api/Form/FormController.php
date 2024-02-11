@@ -32,12 +32,13 @@ class FormController extends Controller
             $page = max(1, (int)$page);
             $limit = max(1, min(100, (int)$limit));
 
-            $forms = $this->formService->listByUser(Auth::id(), $page, $limit);
+            $forms = $this->formService->list($page, $limit);
 
             return new SuccessResponse('item.success.findMany', [
                 'forms' => FormResource::collection($forms),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
+            dd($throwable);
             Log::error('List forms failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
@@ -46,8 +47,7 @@ class FormController extends Controller
 
     public function show(string $slug): JsonResponse {
         try {
-            $userId = Auth::id();
-            $form = $this->formService->getBySlugAndUser($slug, $userId);
+            $form = $this->formService->getBySlug($slug);
 
             return new SuccessResponse('item.success.findOne', [
                 'form' => new FormResource($form),
@@ -81,7 +81,7 @@ class FormController extends Controller
             $userId = Auth::id();
             $updatedFields = $updateRequest->only(['name', 'slug']);
 
-            $form = $this->formService->updateBySlugAndUser($updatedFields, $slug, $userId);
+            $form = $this->formService->update($updatedFields, $slug, $userId);
 
             return new SuccessResponse('item.success.updateOne', [
                 'form' => new FormResource($form),
@@ -98,7 +98,7 @@ class FormController extends Controller
     public function destroy(string $slug): JsonResponse
     {
         try {
-            $this->formService->destroyBySlugAndUser($slug, Auth::id());
+            $this->formService->destroyBySlug($slug);
 
             return new SuccessResponse('item.success.destroyOne', [], Response::HTTP_NO_CONTENT);
         } catch (NotFoundException $exception) {

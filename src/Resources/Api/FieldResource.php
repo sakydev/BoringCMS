@@ -18,6 +18,8 @@ class FieldResource extends JsonResource
             'validation' => $this->validation,
             'condition' => $this->condition,
             'is_required' => $this->is_required,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
             'created' => $this->created_at,
             'updated' => $this->updated_at,
         ];

@@ -7,9 +7,9 @@ use Sakydev\Boring\Models\Form;
 
 class FormRepository
 {
-    public function listByUser(int $userId, int $page, int $limit): LengthAwarePaginator
+    public function list(int $page, int $limit): LengthAwarePaginator
     {
-        return (new Form())->where('user_id', $userId)
+        return (new Form())
             ->orderBy('id', 'asc')
             ->paginate($limit, ['*'], 'page', $page);
     }
@@ -18,23 +18,19 @@ class FormRepository
         return (new Form())->find($formId);
     }
 
+    public function existsBySlug(string $slug): bool {
+        return (new Form())->where('slug', $slug)->exists();
+    }
+
     public function getBySlug(string $slug): ?Form {
         return (new Form())->where('slug', $slug)->first();
-    }
-
-    public function existsBySlugAndUser(string $slug, int $userId): bool {
-        return (new Form())->where('slug', $slug)->where('user_id', $userId)->exists();
-    }
-
-    public function getBySlugAndUser(string $slug, int $userId): ?Form {
-        return (new Form())->where('slug', $slug)->where('user_id', $userId)->first();
     }
 
     public function store(array $content, int $userId): Form {
         $form = new Form();
 
         $form->fill($content);
-        $form->user_id = $userId;
+        $form->created_by = $userId;
 
         $form->save();
         $form->refresh();
@@ -42,8 +38,9 @@ class FormRepository
         return $form;
     }
 
-    public function update(Form $form, array $updatedFields): Form {
+    public function update(Form $form, array $updatedFields, int $userId): Form {
         $form->fill($updatedFields);
+        $form->updated_by = $userId;
 
         $form->save();
         $form->refresh();
@@ -51,7 +48,7 @@ class FormRepository
         return $form;
     }
 
-    public function destroyBySlugAndUser(string $slug, int $userId): bool {
-        return (new Form())->where('slug', $slug)->where('user_id', $userId)->delete();
+    public function destroyBySlug(string $slug): bool {
+        return (new Form())->where('slug', $slug)->delete();
     }
 }

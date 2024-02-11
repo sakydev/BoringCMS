@@ -15,10 +15,12 @@ class FormFactory extends Factory
 
     public function definition(): array
     {
+        $user = BoringUser::factory()->createOne();
         return [
             'name' => fake()->name(),
             'slug' => fake()->slug(10),
-            'user_id' => BoringUser::factory()->createOne()->id,
+            'created_by' => $user->id,
+            'updated_by' => $user->id,
         ];
     }
 }

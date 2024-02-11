@@ -21,7 +21,7 @@ class UpdateFormTest extends TestCase
     public function testUpdateForm(): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        $form = Form::factory()->create(['user_id' => $requestUser->id]);
+        $form = Form::factory()->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::UPDATE_FORM_ENDPOINT, $form->slug);
         $requestContent = [
@@ -40,6 +40,8 @@ class UpdateFormTest extends TestCase
                         'id',
                         'name',
                         'slug',
+                        'created_by',
+                        'updated_by',
                         'created',
                         'updated',
                     ],
@@ -47,30 +49,12 @@ class UpdateFormTest extends TestCase
             ]);
     }
 
-    public function testTryToUpdateFormForAnotherUser(): void
-    {
-        $requestUser = BoringUser::factory()->createOne();
-        $formUser = BoringUser::factory()->createOne();
-
-        $form = Form::factory()->create(['user_id' => $formUser->id]);
-
-        $requestUrl = sprintf(self::UPDATE_FORM_ENDPOINT, $form->slug);
-        $requestContent = [
-            'name' => self::VALID_NAME,
-            'slug' => self::VALID_SLUG,
-        ];
-
-        $this->actingAs($requestUser)
-            ->patchJson($requestUrl, $requestContent)
-            ->assertStatus(Response::HTTP_NOT_FOUND);
-    }
-
-    public function testTryUpdateFormWithDuplicateNameForSameUser(): void
+    public function testTryUpdateFormWithDuplicateName(): void
     {
         $requestUser = BoringUser::factory()->createOne();
 
-        $firstForm = Form::factory()->create(['user_id' => $requestUser->id]);
-        $secondForm = Form::factory()->create(['user_id' => $requestUser->id]);
+        $firstForm = Form::factory()->create(['created_by' => $requestUser->id]);
+        $secondForm = Form::factory()->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::UPDATE_FORM_ENDPOINT, $firstForm->slug);
         $requestContent = [
@@ -89,12 +73,12 @@ class UpdateFormTest extends TestCase
             ]);
     }
 
-    public function testTryUpdateFormWithDuplicateSlugForSameUser(): void
+    public function testTryUpdateFormWithDuplicateSlug(): void
     {
         $requestUser = BoringUser::factory()->createOne();
 
-        $firstForm = Form::factory()->create(['user_id' => $requestUser->id]);
-        $secondForm = Form::factory()->create(['user_id' => $requestUser->id]);
+        $firstForm = Form::factory()->create(['created_by' => $requestUser->id]);
+        $secondForm = Form::factory()->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::UPDATE_FORM_ENDPOINT, $firstForm->slug);
         $requestContent = [
@@ -129,7 +113,7 @@ class UpdateFormTest extends TestCase
     public function testTryUpdateFormWithChangedSlug(): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        $form = Form::factory()->create(['user_id' => $requestUser->id]);
+        $form = Form::factory()->create(['created_by' => $requestUser->id]);
         $requestUrl = sprintf(self::UPDATE_FORM_ENDPOINT, $form->slug);
         $requestContent = [
             'slug' => 'changed-slug',
@@ -144,7 +128,8 @@ class UpdateFormTest extends TestCase
         $responseContent = $response->json();
         $formResponse = $responseContent['content']['form'];
 
-        $this->assertEquals($requestUser->id, $formResponse['user_id']);
+        $this->assertEquals($requestUser->id, $formResponse['created_by']);
+        $this->assertEquals($requestUser->id, $formResponse['updated_by']);
         $this->assertEquals($requestContent['slug'], $formResponse['slug']);
 
         // 2/2 we need to confirm that previous slug becomes unavailable
@@ -161,7 +146,7 @@ class UpdateFormTest extends TestCase
     public function testFormValidation(array $requestContent, array $expectedJsonStructure): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        $form = Form::factory()->createOne(['user_id' => $requestUser->id]);
+        $form = Form::factory()->createOne(['created_by' => $requestUser->id]);
         $requestUrl = sprintf(self::UPDATE_FORM_ENDPOINT, $form->slug);
         $response = $this
             ->actingAs($requestUser)

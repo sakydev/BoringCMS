@@ -18,7 +18,7 @@ class ShowFormTest extends TestCase
 
     public function testShowForm(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $created = Form::factory()->create(['user_id' => $requestUser->id]);
+        $created = Form::factory()->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->slug);
         $response = $this->actingAs($requestUser)->getJson($requestUrl);
@@ -57,7 +57,7 @@ class ShowFormTest extends TestCase
 
     public function testTryShowFormWithId(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $created = Form::factory()->create(['user_id' => $requestUser->id]);
+        $created = Form::factory()->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->id);
         $response = $this->actingAs($requestUser)->getJson($requestUrl);

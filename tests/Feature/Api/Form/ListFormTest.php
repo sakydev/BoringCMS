@@ -19,7 +19,7 @@ class ListFormTest extends TestCase
     public function testListForms(): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        $createdForms = Form::factory()->count(3)->create(['user_id' => $requestUser->id]);
+        $createdForms = Form::factory()->count(3)->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::LIST_FORMS_ENDPOINT, 1, 10);
         $response = $this->actingAs($requestUser)->getJson($requestUrl);
@@ -32,9 +32,10 @@ class ListFormTest extends TestCase
                     'forms' => [
                         '*' => [
                             'id',
-                            'user_id',
                             'name',
                             'slug',
+                            'created_by',
+                            'updated_by',
                             'created',
                             'updated',
                         ],
@@ -50,7 +51,7 @@ class ListFormTest extends TestCase
             $this->assertEquals($createdForm->id, $responseForms[$index]['id']);
             $this->assertEquals($createdForm->name, $responseForms[$index]['name']);
             $this->assertEquals($createdForm->slug, $responseForms[$index]['slug']);
-            $this->assertEquals($createdForm->user_id, $requestUser->id);
+            $this->assertEquals($createdForm->created_by, $requestUser->id);
         }
     }
 
@@ -58,7 +59,7 @@ class ListFormTest extends TestCase
     public function testListFormsPagination(): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        Form::factory()->count(5)->create(['user_id' => $requestUser->id]);
+        Form::factory()->count(5)->create(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::LIST_FORMS_ENDPOINT, 3, 2);
         $response = $this->actingAs($requestUser)->getJson($requestUrl);
@@ -71,9 +72,10 @@ class ListFormTest extends TestCase
                     'forms' => [
                         '*' => [
                             'id',
-                            'user_id',
                             'name',
                             'slug',
+                            'created_by',
+                            'updated_by',
                             'created',
                             'updated',
                         ],
