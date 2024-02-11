@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            //$table->unsignedBigInteger('blueprint_id')->nullable();
             //$table->unsignedBigInteger('set_id')->nullable();
+            $table->unsignedBigInteger('collection_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->string('field_type');
@@ -23,11 +23,11 @@ return new class extends Migration
             $table->boolean('is_required');
             $table->timestamps();
 
-            /*$table->foreign('blueprint_id')
+            $table->foreign('collection_id')
                 ->references('id')
-                ->on('blueprints')
+                ->on('collections')
                 ->onDelete('cascade');
-
+            /*
             $table->foreign('set_id')
                 ->references('id')
                 ->on('sets')
