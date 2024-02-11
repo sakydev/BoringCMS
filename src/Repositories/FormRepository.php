@@ -10,6 +10,7 @@ class FormRepository
     public function listByUser(int $userId, int $page, int $limit): LengthAwarePaginator
     {
         return (new Form())->where('user_id', $userId)
+            ->orderBy('id', 'asc')
             ->paginate($limit, ['*'], 'page', $page);
     }
 
@@ -29,10 +30,10 @@ class FormRepository
         return (new Form())->where('slug', $slug)->where('user_id', $userId)->first();
     }
 
-    public function store(array $formData, int $userId): Form {
+    public function store(array $content, int $userId): Form {
         $form = new Form();
 
-        $form->fill($formData);
+        $form->fill($content);
         $form->user_id = $userId;
 
         $form->save();
