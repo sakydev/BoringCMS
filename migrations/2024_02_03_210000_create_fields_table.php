@@ -24,6 +24,8 @@ return new class extends Migration
             $table->boolean('is_required');
             $table->timestamps();
 
+            $table->unique(['collection_id', 'name']);
+
             $table->foreign('collection_id')
                 ->references('id')
                 ->on('collections')
