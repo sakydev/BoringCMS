@@ -26,6 +26,6 @@ class BoringUser extends Authenticatable
     }
 
     public function forms(): HasMany {
-        return $this->hasMany(Form::class, 'user_id', 'id');
+        return $this->hasMany(Form::class, 'created_by', 'id');
     }
 }

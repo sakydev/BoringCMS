@@ -18,6 +18,7 @@
         "error": {
             "alreadyPublished": "Item already published",
             "alreadyUnpublished": "Item is already unpublished",
+            "alreadyExists": "Item duplicate exists",
             "invalidAccessPermissions": "User has insufficient permissions to access item",
             "invalidCreatePermissions": "User has insufficient permissions to create item",
             "invalidUpdatePermissions": "User has insufficient permissions to update item",

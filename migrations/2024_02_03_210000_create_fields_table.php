@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -13,15 +14,17 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->default(DB::raw('uuid_generate_v4()'))->index();
             //$table->unsignedBigInteger('set_id')->nullable();
             $table->unsignedBigInteger('collection_id')->nullable();
             $table->string('name');
-            $table->string('slug');
             $table->string('field_type');
-            $table->json('validation');
-            $table->json('condition');
+            $table->json('validation')->nullable();
+            $table->json('condition')->nullable();
             $table->boolean('is_required');
             $table->timestamps();
+
+            $table->unique(['collection_id', 'name']);
 
             $table->foreign('collection_id')
                 ->references('id')

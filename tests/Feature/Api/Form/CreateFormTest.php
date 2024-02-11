@@ -37,6 +37,8 @@ class CreateFormTest extends TestCase
                         'id',
                         'name',
                         'slug',
+                        'created_by',
+                        'updated_by',
                         'created',
                         'updated',
                     ],
@@ -46,47 +48,17 @@ class CreateFormTest extends TestCase
         $responseContent = $response->json();
         $formResponse = $responseContent['content']['form'];
 
-        $this->assertEquals($requestUser->id, $formResponse['user_id']);
+        $this->assertEquals($requestUser->id, $formResponse['created_by']);
         $this->assertEquals($requestContent['name'], $formResponse['name']);
         $this->assertEquals($requestContent['slug'], $formResponse['slug']);
     }
 
-    public function testCreateFormWithDuplicateValuesForAnotherUser(): void {
-        $requestUser = BoringUser::factory()->createOne();
-        $anotherUser = BoringUser::factory()->createOne();
-        $requestContent = [
-            'name' => self::VALID_NAME,
-            'slug' => self::VALID_SLUG,
-            'user_id' => $anotherUser->id,
-        ];
-
-        Form::factory()->create($requestContent);
-
-        $response = $this->actingAs($requestUser)
-            ->postJson(self::CREATE_FORM_ENDPOINT, $requestContent);
-
-        $response->assertStatus(Response::HTTP_CREATED)
-            ->assertJsonStructure([
-                'status',
-                'message',
-                'content' => [
-                    'form' => [
-                        'id',
-                        'name',
-                        'slug',
-                        'created',
-                        'updated',
-                    ],
-                ],
-            ]);
-    }
-
-    public function testTryCreateFormWithDuplicateValuesForSameUser(): void {
+    public function testTryCreateFormWithDuplicateValues(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestContent = [
             'name' => self::VALID_NAME,
             'slug' => self::VALID_SLUG,
-            'user_id' => $requestUser->id,
+            'created_by' => $requestUser->id,
         ];
 
         Form::factory()->create($requestContent);

@@ -11,15 +11,15 @@ class FormService
 {
     public function __construct(readonly FormRepository $formRepository) {}
 
-    public function listByUser(int $userId, int $page, int $limit): LengthAwarePaginator {
-        return $this->formRepository->listByUser($userId, $page, $limit);
+    public function list(int $page, int $limit): LengthAwarePaginator {
+        return $this->formRepository->list($page, $limit);
     }
 
     /**
      * @throws NotFoundException
      */
-    public function getBySlugAndUser(string $slug, int $userId): Form {
-        $form = $this->formRepository->getBySlugAndUser($slug, $userId);
+    public function getBySlug(string $slug): Form {
+        $form = $this->formRepository->getBySlug($slug);
         if (!$form) {
             throw new NotFoundException('item.error.notFound');
         }
@@ -34,23 +34,23 @@ class FormService
     /**
      * @throws NotFoundException
      */
-    public function updateBySlugAndUser(array $updatedContent, string $slug, int $userId): Form {
-        $form = $this->formRepository->getBySlugAndUser($slug, $userId);
+    public function update(array $updatedContent, string $slug, int $userId): Form {
+        $form = $this->formRepository->getBySlug($slug);
         if (!$form) {
             throw new NotFoundException('item.error.notFound');
         }
 
-        return $this->formRepository->update($form, $updatedContent);
+        return $this->formRepository->update($form, $updatedContent, $userId);
     }
 
     /**
      * @throws NotFoundException
      */
-    public function destroyBySlugAndUser(string $slug, int $userId): bool {
-        if (!$this->formRepository->existsBySlugAndUser($slug, $userId)) {
+    public function destroyBySlug(string $slug): bool {
+        if (!$this->formRepository->existsBySlug($slug)) {
             throw new NotFoundException('item.error.notFound');
         }
 
-        return $this->formRepository->destroyBySlugAndUser($slug, $userId);
+        return $this->formRepository->destroyBySlug($slug);
     }
 }
