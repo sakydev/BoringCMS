@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Services;
 
+use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Models\Field;
 use Sakydev\Boring\Repositories\CollectionRepository;
@@ -18,6 +19,11 @@ class FieldService
         $collectionDetails = $this->collectionRepository->getByName($collectionName);
         if (!$collectionDetails) {
             throw new NotFoundException('item.error.notFound');
+        }
+
+        $duplicateFieldExists = $this->fieldRepository->duplicateFieldExists($content['name'], $collectionDetails->id);
+        if ($duplicateFieldExists) {
+            throw new BadRequestException('item.error.alreadyExists');
         }
 
         return $this->fieldRepository->store($content, $collectionDetails->id);
