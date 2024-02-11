@@ -5,13 +5,12 @@ namespace Sakydev\Boring\Http\Requests\Api\Field;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Sakydev\Boring\Models\Field;
 
 class CreateFieldRequest extends FormRequest
 {
     public function rules()
     {
-        $collectionId = $this->route('collectionId');
-
         return [
             'name' => [
                 'required',
@@ -19,16 +18,15 @@ class CreateFieldRequest extends FormRequest
                 'min:3',
                 'max:50',
                 'regex:/^[0-9a-z_-]+$/i',
-                Rule::unique('fields', 'name')->where(function ($query) use ($collectionId) {
-                    return $query->where('collection_id', $collectionId);
-                }),
             ],
             'field_type' => [
                 'required',
                 'string',
-                'min:3',
-                'max:100',
-                'regex:/^[a-z]+$/i',
+                Rule::in(array_keys(Field::SUPPORTED_TYPES))
+            ],
+            'is_required' => [
+                'required',
+                'boolean',
             ],
             'validation' => [
                 'sometimes',
@@ -40,10 +38,6 @@ class CreateFieldRequest extends FormRequest
                 'required',
                 'json',
             ],
-            'is_required' => [
-                'required',
-                'boolean',
-            ]
         ];
     }
 }
