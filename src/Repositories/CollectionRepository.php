@@ -13,7 +13,7 @@ class CollectionRepository
         $collection = new Collection();
 
         $collection->fill($content);
-        $collection->user_id = $userId;
+        $collection->created_by = $userId;
 
         $collection->save();
         $collection->refresh();
