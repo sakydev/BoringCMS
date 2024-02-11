@@ -1,6 +1,6 @@
 <?php
 
-namespace Sakydev\Boring\Http\Requests\Api;
+namespace Sakydev\Boring\Http\Requests\Api\Form;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;

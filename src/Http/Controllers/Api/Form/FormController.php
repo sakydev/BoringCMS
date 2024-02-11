@@ -1,18 +1,16 @@
 <?php
 
-namespace Sakydev\Boring\Http\Controllers\Api;
+namespace Sakydev\Boring\Http\Controllers\Api\Form;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Sakydev\Boring\Http\Requests\Api\CreateFormRequest;
-use Sakydev\Boring\Http\Requests\Api\UpdateFormRequest;
-use Sakydev\Boring\Models\Form;
+use Sakydev\Boring\Http\Requests\Api\Form\CreateFormRequest;
+use Sakydev\Boring\Http\Requests\Api\Form\UpdateFormRequest;
 use Sakydev\Boring\Repositories\FormRepository;
 use Sakydev\Boring\Resources\Api\FormResource;
-use Sakydev\Boring\Resources\Api\Responses\ErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\ExceptionErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\NotFoundErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\SuccessResponse;

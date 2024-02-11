@@ -1,11 +1,10 @@
 <?php
 
-namespace Sakydev\Boring\Http\Controllers\Api;
+namespace Sakydev\Boring\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Sakydev\Boring\Http\Requests\Api\RegisterUserRequest;
 use Sakydev\Boring\Repositories\BoringUserRepository;
 use Sakydev\Boring\Resources\Api\BoringUserResource;
 use Sakydev\Boring\Resources\Api\Responses\ErrorResponse;
@@ -14,22 +13,19 @@ use Sakydev\Boring\Resources\Api\Responses\SuccessResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class RegisterController extends Controller
+class UserController extends Controller
 {
     public function __construct(readonly BoringUserRepository $userRepository) {}
 
-    public function store(RegisterUserRequest $createRequest): SuccessResponse|ErrorResponse {
+    public function me(): SuccessResponse|ErrorResponse {
         try {
-            $requestContent = $createRequest->validated();
-            $requestContent['password'] = Hash::make($createRequest->password);
+            $user = $this->userRepository->getById(Auth::id());
 
-            $user = $this->userRepository->store($requestContent);
-
-            return new SuccessResponse('auth.success.register', [
+            return new SuccessResponse('item.success.findOne', [
                 'user' => new BoringUserResource($user),
-            ], Response::HTTP_CREATED);
+            ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
-            Log::error('Create user failed', ['error' => $throwable->getMessage()]);
+            Log::error('User show failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
         }

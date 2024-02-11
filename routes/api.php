@@ -10,7 +10,7 @@ Route::prefix('api')->middleware([])->group(function() {
     Route::group([], boringPath('routes/api-group/blueprint.php'));
     Route::group([], boringPath('routes/api-group/collection.php'));
     Route::group([], boringPath('routes/api-group/container.php'));
-    Route::group([], boringPath('routes/api-group/fieldset.php'));
+    Route::group([], boringPath('routes/api-group/field.php'));
     Route::group([], boringPath('routes/api-group/folder.php'));
     Route::group([], boringPath('routes/api-group/form.php'));
     Route::group([], boringPath('routes/api-group/setting.php'));

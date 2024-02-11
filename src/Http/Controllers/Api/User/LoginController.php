@@ -1,11 +1,11 @@
 <?php
 
-namespace Sakydev\Boring\Http\Controllers\Api;
+namespace Sakydev\Boring\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Sakydev\Boring\Http\Requests\Api\LoginUserRequest;
+use Sakydev\Boring\Http\Requests\Api\User\LoginUserRequest;
 use Sakydev\Boring\Repositories\BoringUserRepository;
 use Sakydev\Boring\Resources\Api\BoringUserResource;
 use Sakydev\Boring\Resources\Api\Responses\ErrorResponse;

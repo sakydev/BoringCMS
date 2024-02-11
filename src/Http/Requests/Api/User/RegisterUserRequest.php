@@ -1,21 +1,28 @@
 <?php
 
-namespace Sakydev\Boring\Http\Requests\Api;
+namespace Sakydev\Boring\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class LoginUserRequest extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     public function rules()
     {
         return [
+            'name' => [
+                'required',
+                'string',
+                'min:3',
+                'max:50',
+                'regex:/^[0-9a-z\s]+$/i'
+            ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'min:3',
-                'max:50',
+                'max:100',
+                'unique:users,email',
             ],
             'password' => [
                 'required',
