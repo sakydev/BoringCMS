@@ -13,21 +13,17 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('blueprint_id')->nullable();
-            $table->unsignedBigInteger('set_id')->nullable();
+            //$table->unsignedBigInteger('blueprint_id')->nullable();
+            //$table->unsignedBigInteger('set_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->string('field_type');
+            $table->json('validation');
+            $table->json('condition');
             $table->boolean('is_required');
             $table->timestamps();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-
-            $table->foreign('blueprint_id')
+            /*$table->foreign('blueprint_id')
                 ->references('id')
                 ->on('blueprints')
                 ->onDelete('cascade');
@@ -35,7 +31,7 @@ return new class extends Migration
             $table->foreign('set_id')
                 ->references('id')
                 ->on('sets')
-                ->onDelete('cascade');
+                ->onDelete('cascade');*/
         });
     }
 
