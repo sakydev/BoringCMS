@@ -18,7 +18,7 @@ class CollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->bothify('??????????'),
             'description' => fake()->text(100),
             'is_hidden' => fake()->boolean(),
             'user_id' => BoringUser::factory()->createOne()->id,
