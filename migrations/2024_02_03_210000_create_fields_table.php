@@ -16,7 +16,6 @@ return new class extends Migration
             //$table->unsignedBigInteger('set_id')->nullable();
             $table->unsignedBigInteger('collection_id')->nullable();
             $table->string('name');
-            $table->string('slug');
             $table->string('field_type');
             $table->json('validation');
             $table->json('condition');

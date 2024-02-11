@@ -13,7 +13,6 @@ class FieldResource extends JsonResource
             'id' => $this->id,
             'collection_id' => $this->collection_id,
             'name' => $this->name,
-            'slug' => $this->slug,
             'validation' => $this->validation,
             'condition' => $this->condition,
             'is_required' => $this->is_required,
