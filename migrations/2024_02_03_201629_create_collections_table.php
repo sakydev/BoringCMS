@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('blueprint_id');
             $table->string('name');
             $table->string('slug');
+            $table->string('description');
+            $table->string('is_hidden');
             $table->timestamps();
-
-            $table->foreign('blueprint_id')
-                ->references('id')
-                ->on('blueprints')
-                ->onDelete('cascade');
         });
     }
 

@@ -12,6 +12,10 @@ function boringPath(string $path): string {
 
 function phrase($key, $replace = [], $locale = null): string
 {
+    if (!strpos($key, '.')) {
+        return $key;
+    }
+
     $keys = explode('.', $key);
     $translation = trans(array_shift($keys), $replace, $locale);
 

@@ -1,12 +1,10 @@
 <?php
 
-namespace Sakydev\Boring\Http\Requests\Api;
+namespace Sakydev\Boring\Http\Requests\Api\Form;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
-use Sakydev\Boring\Models\Form;
-use Sakydev\Boring\Resources\Api\Responses\ErrorResponse;
 
 class UpdateFormRequest extends FormRequest
 {

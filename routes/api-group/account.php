@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Sakydev\Boring\Http\Controllers\Api\RegisterController;
-use Sakydev\Boring\Http\Controllers\Api\LoginController;
-use Sakydev\Boring\Http\Controllers\Api\UserController;
+use Sakydev\Boring\Http\Controllers\Api\User\LoginController;
+use Sakydev\Boring\Http\Controllers\Api\User\RegisterController;
+use Sakydev\Boring\Http\Controllers\Api\User\UserController;
 
 Route::prefix('/account')->group(function() {
     Route::middleware('guest')->group(function() {
