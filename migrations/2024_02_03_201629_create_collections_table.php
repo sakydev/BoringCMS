@@ -14,9 +14,7 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->uuid()->default(DB::raw('uuid_generate_v4()'))->index();
             $table->string('name');
-            $table->string('slug');
             $table->string('description');
             $table->string('is_hidden');
             $table->timestamps();

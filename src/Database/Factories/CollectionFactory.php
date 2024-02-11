@@ -19,7 +19,6 @@ class CollectionFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'slug' => fake()->slug(10),
             'description' => fake()->text(100),
             'is_hidden' => fake()->boolean(),
             'user_id' => BoringUser::factory()->createOne()->id,
