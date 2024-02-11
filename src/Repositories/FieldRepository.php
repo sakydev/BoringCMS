@@ -13,6 +13,7 @@ class FieldRepository
         $field->collection_id = $collectionId;
 
         $field->save();
+        $field->refresh();
 
         return $field;
     }

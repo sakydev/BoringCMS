@@ -16,15 +16,15 @@ class FieldController
 {
     public function __construct(readonly FieldService $fieldService) {}
 
-    public function store(CreateFieldRequest $createRequest, int $collectionId): JsonResponse {
+    public function store(CreateFieldRequest $createRequest, string $collectionName): JsonResponse {
         try {
-            $form = $this->fieldService->store($createRequest->validated(), $collectionId);
+            $field = $this->fieldService->store($createRequest->validated(), $collectionName);
 
             return new SuccessResponse('item.success.createOne', [
-                'field' => new FieldResource($form),
+                'field' => new FieldResource($field),
             ], Response::HTTP_CREATED);
         } catch (Throwable $throwable) {
-            Log::error('Create form failed', ['error' => $throwable->getMessage()]);
+            Log::error('Create field failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
         }

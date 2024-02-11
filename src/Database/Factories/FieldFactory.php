@@ -19,6 +19,7 @@ class FieldFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'uuid' => fake()->uuid(),
             'slug' => fake()->slug(10),
             'user_id' => Collection::factory()->createOne()->id,
         ];

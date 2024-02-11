@@ -37,14 +37,15 @@ class FormRepository
         $form->user_id = $userId;
 
         $form->save();
+        $form->refresh();
 
         return $form;
     }
 
     public function update(Form $form, array $updatedFields): Form {
         $form->fill($updatedFields);
-        $form->save();
 
+        $form->save();
         $form->refresh();
 
         return $form;
