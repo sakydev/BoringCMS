@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('collection_id')->nullable();
             $table->string('name');
             $table->string('field_type');
-            $table->json('validation');
-            $table->json('condition');
+            $table->json('validation')->nullable();
+            $table->json('condition')->nullable();
             $table->boolean('is_required');
             $table->timestamps();
 
