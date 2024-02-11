@@ -17,11 +17,14 @@ class CollectionFactory extends Factory
 
     public function definition(): array
     {
+        $user = BoringUser::factory()->createOne();
+
         return [
             'name' => fake()->bothify('??????????'),
             'description' => fake()->text(100),
             'is_hidden' => fake()->boolean(),
-            'user_id' => BoringUser::factory()->createOne()->id,
+            'created_by' => $user->id,
+            'updated_by' => $user->id,
         ];
     }
 }

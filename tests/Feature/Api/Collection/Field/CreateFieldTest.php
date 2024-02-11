@@ -26,7 +26,7 @@ class CreateFieldTest extends TestCase
 
     public function testCreateField(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['user_id' => $requestUser->id]);
+        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
         $response = $this->actingAs($requestUser)
@@ -66,7 +66,7 @@ class CreateFieldTest extends TestCase
 
     public function testTryCreateFieldWithDuplicateValues(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['user_id' => $requestUser->id]);
+        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
         $duplicateField = Field::factory()->createOne(['collection_id' => $requestCollection->id]);
         $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateField->name]);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
@@ -82,7 +82,7 @@ class CreateFieldTest extends TestCase
 
     public function testTryCreateFieldWithoutAuthentication(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['user_id' => $requestUser->id]);
+        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
 
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
         $this->postJson($requestUrl, self::VALID_REQUEST_CONTENT)
