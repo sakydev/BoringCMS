@@ -38,7 +38,6 @@ class FormController extends Controller
                 'forms' => FormResource::collection($forms),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
-            dd($throwable);
             Log::error('List forms failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');

@@ -22,7 +22,9 @@ class UpdateFormRequest extends FormRequest
                 'min:3',
                 'max:50',
                 'regex:/^[0-9a-z\s]+$/i',
-                Rule::unique('forms', 'name'),
+                Rule::unique('forms', 'name')->where(function ($query) use ($existingSlug) {
+                    return $query->where('slug', '!=', $existingSlug);
+                }),
             ],
             'slug' => [
                 Rule::requiredIf(function () {
@@ -32,7 +34,9 @@ class UpdateFormRequest extends FormRequest
                 'min:3',
                 'max:100',
                 'regex:/^[0-9a-z_-]+$/i',
-                Rule::unique('forms', 'slug'),
+                Rule::unique('forms', 'slug')->where(function ($query) use ($existingSlug) {
+                    return $query->where('slug', '!=', $existingSlug);
+                }),
             ],
         ];
     }

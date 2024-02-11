@@ -21,8 +21,8 @@ class FieldService
             throw new NotFoundException('item.error.notFound');
         }
 
-        $duplicateFieldExists = $this->fieldRepository->duplicateFieldExists($content['name'], $collectionDetails->id);
-        if ($duplicateFieldExists) {
+        $nnameExists = $this->fieldRepository->nameExists($content['name'], $collectionDetails->id);
+        if ($nnameExists) {
             throw new BadRequestException('item.error.alreadyExists');
         }
 

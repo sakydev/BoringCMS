@@ -6,7 +6,7 @@ use Sakydev\Boring\Models\Field;
 
 class FieldRepository
 {
-    public function duplicateFieldExists(string $name, int $collectionId): bool {
+    public function nameExists(string $name, int $collectionId): bool {
         return (new Field())
             ->where('name', $name)
             ->where('collection_id', $collectionId)

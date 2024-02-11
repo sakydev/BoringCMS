@@ -11,7 +11,7 @@ class Collection extends Model
 {
     use HasFactory;
 
-    protected $protected = ['created_at', 'updated_at'];
+    protected $guarded = ['created_at', 'updated_at'];
 
     /**
      * Create a new factory instance for the model.

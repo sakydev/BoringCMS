@@ -2,10 +2,8 @@
 
 namespace Sakydev\Boring\Database\Factories;
 
-use Sakydev\Boring\Models\BoringUser;
 use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Models\Field;
-use Sakydev\Boring\Models\Form;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

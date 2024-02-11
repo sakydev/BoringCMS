@@ -17,7 +17,9 @@ class CreateFieldTest extends TestCase
     use RefreshDatabase;
 
     private const CREATE_FIELD_ENDPOINT = '/api/collections/%s/fields';
+
     private const VALID_NAME = 'title';
+
     private const VALID_REQUEST_CONTENT = [
         'name' => self::VALID_NAME,
         'field_type' => Field::TYPE_SHORT_TEXT,
@@ -27,8 +29,8 @@ class CreateFieldTest extends TestCase
     public function testCreateField(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
+
         $response = $this->actingAs($requestUser)
             ->postJson($requestUrl, self::VALID_REQUEST_CONTENT);
 
@@ -73,6 +75,7 @@ class CreateFieldTest extends TestCase
         $duplicateField = Field::factory()->createOne(['collection_id' => $requestCollection->id]);
         $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateField->name]);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
+
         $response = $this->actingAs($requestUser)
             ->postJson($requestUrl, $requestContent);
 
@@ -86,8 +89,8 @@ class CreateFieldTest extends TestCase
     public function testTryCreateFieldWithoutAuthentication(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
+
         $this->postJson($requestUrl, self::VALID_REQUEST_CONTENT)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
