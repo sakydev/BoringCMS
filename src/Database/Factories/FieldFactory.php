@@ -18,10 +18,11 @@ class FieldFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => fake()->bothify('??????????'),
             'uuid' => fake()->uuid(),
-            'slug' => fake()->slug(10),
-            'user_id' => Collection::factory()->createOne()->id,
+            'collection_id' => Collection::factory()->createOne()->id,
+            'field_type' => array_rand(Field::SUPPORTED_TYPES),
+            'is_required' => false,
         ];
     }
 }
