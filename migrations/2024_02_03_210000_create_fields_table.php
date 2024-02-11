@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->primary();
             //$table->unsignedBigInteger('set_id')->nullable();
             $table->unsignedBigInteger('collection_id')->nullable();
             $table->string('name');

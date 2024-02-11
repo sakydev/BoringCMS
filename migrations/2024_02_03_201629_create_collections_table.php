@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->primary();
             $table->string('name');
             $table->string('slug');
             $table->string('description');

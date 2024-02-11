@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('forms', function (Blueprint $table) {
             $table->id();
+            $table->uuid()->primary();
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('slug');
