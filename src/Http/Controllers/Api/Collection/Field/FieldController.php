@@ -5,7 +5,7 @@ namespace Sakydev\Boring\Http\Controllers\Api\Collection\Field;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Sakydev\Boring\Exceptions\BadRequestException;
-use Sakydev\Boring\Http\Requests\Api\Field\CreateFieldRequest;
+use Sakydev\Boring\Http\Requests\Api\Collection\Field\CreateFieldRequest;
 use Sakydev\Boring\Resources\Api\FieldResource;
 use Sakydev\Boring\Resources\Api\Responses\BadRequestErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\ExceptionErrorResponse;

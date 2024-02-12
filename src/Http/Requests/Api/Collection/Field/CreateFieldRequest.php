@@ -1,9 +1,8 @@
 <?php
 
-namespace Sakydev\Boring\Http\Requests\Api\Field;
+namespace Sakydev\Boring\Http\Requests\Api\Collection\Field;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Sakydev\Boring\Models\Field;
 
