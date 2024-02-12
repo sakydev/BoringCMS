@@ -3,51 +3,48 @@
 namespace Sakydev\Boring\Services;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 class TableService
 {
-    private function getFieldsMap(): array {
+    public function getDefaultFields(): array {
         return [
             'id' => [
-                'type' => 'primary',
+                'field_type' => 'primary',
             ],
             'created_at' => [
-                'type' => 'timestamp',
+                'field_type' => 'timestamp',
                 'is_nullable' => false,
+                'is_default' => true,
                 'default' => '',
             ],
             'updated_at' => [
-                'type' => 'timestamp',
+                'field_type' => 'timestamp',
                 'is_nullable' => false,
+                'is_default' => true,
                 'default' => '',
             ],
         ];
-    }
-
-    public function getDefaultFields(): array {
-        return Arr::only($this->getFieldsMap(), ['id', 'created_at', 'updated_at']);
     }
 
     public function exists(string $name): bool {
         return Schema::hasTable($name);
     }
 
-    public function create(string $name, array $content): void {
+    public function store(string $name, array $content): void {
         Schema::create($name, function (Blueprint $table) use ($content) {
             foreach ($content as $fieldName => $fieldRules) {
-                $this->createField($table, $fieldName, $fieldRules);
+                $this->storeField($table, $fieldName, $fieldRules);
             }
         });
     }
 
-    public function createWithDefaults(string $name): void {
-        $this->create($name, $this->getDefaultFields());
+    public function storeWithDefaults(string $name): void {
+        $this->store($name, $this->getDefaultFields());
     }
 
-    private function createField(Blueprint $table, string $name, array $rules): void {
-        switch ($rules['type']) {
+    private function storeField(Blueprint $table, string $name, array $rules): void {
+        switch ($rules['field_type']) {
             case 'primary':
                 $table->id($name);
                 break;
