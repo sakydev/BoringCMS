@@ -1,6 +1,6 @@
 <?php
 
-namespace Sakydev\Boring\Http\Controllers\Api\Field;
+namespace Sakydev\Boring\Http\Controllers\Api\Collection;
 
 use Illuminate\Support\Facades\Log;
 use Sakydev\Boring\Exceptions\BadRequestException;
@@ -14,7 +14,7 @@ use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-class FieldController
+class CollectionController
 {
     public function __construct(readonly FieldService $fieldService) {}
 

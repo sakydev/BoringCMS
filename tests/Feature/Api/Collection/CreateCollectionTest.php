@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Api\Collection\Field;
+namespace Feature\Api\Forms;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Tests\CreatesApplication;
 use Tests\TestCase;
 
-class CreateFieldTest extends TestCase
+class CreateCollectionTest extends TestCase
 {
     use CreatesApplication;
     use RefreshDatabase;
@@ -60,6 +60,7 @@ class CreateFieldTest extends TestCase
         $responseContent = $response->json();
         $fieldResponse = $responseContent['content']['field'];
 
+        $this->assertEquals($requestUser->id, $fieldResponse['id']);
         $this->assertNotEmpty($fieldResponse['uuid']);
         $this->assertTrue($fieldResponse['is_required']);
         $this->assertNull($fieldResponse['validation']);
