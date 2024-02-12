@@ -22,6 +22,7 @@
             "invalidAccessPermissions": "User has insufficient permissions to access item",
             "invalidCreatePermissions": "User has insufficient permissions to create item",
             "invalidUpdatePermissions": "User has insufficient permissions to update item",
+            "invalidValue": "User provied invalid item value",
             "notFound": "Item not found"
         },
         "success": {
