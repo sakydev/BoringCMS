@@ -11,20 +11,22 @@ use Sakydev\Boring\Resources\Api\CollectionResource;
 use Sakydev\Boring\Resources\Api\Responses\BadRequestErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\ExceptionErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\SuccessResponse;
+use Sakydev\Boring\Services\CollectionFieldService;
 use Sakydev\Boring\Services\CollectionService;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class CollectionController
 {
-    public function __construct(readonly CollectionService $collectionService) {}
+    public function __construct(readonly CollectionFieldService $collectionFieldService) {}
 
     public function store(CreateCollectionRequest $createRequest): JsonResponse {
         try {
-            $field = $this->collectionService->store($createRequest->validated(), Auth::id());
+            $collection = $this->collectionFieldService
+                ->storeCollection($createRequest->validated(), Auth::id());
 
             return new SuccessResponse('item.success.createOne', [
-                'collection' => new CollectionResource($field),
+                'collection' => new CollectionResource($collection),
             ], Response::HTTP_CREATED);
         } catch (BadRequestException $exception) {
             return new BadRequestErrorResponse($exception->getMessage());
