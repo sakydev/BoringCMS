@@ -89,7 +89,7 @@ class CreateCollectionTest extends TestCase
     /**
      * @dataProvider collectionValidationDataProvider
      */
-    /*public function testCollectionValidation(array $requestContent, array $expectedJsonStructure): void
+    public function testCollectionValidation(array $requestContent, array $expectedJsonStructure): void
     {
         $requestUser = BoringUser::factory()->createOne();
         $response = $this
@@ -98,7 +98,7 @@ class CreateCollectionTest extends TestCase
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure($expectedJsonStructure);
-    }*/
+    }
 
     public static function collectionValidationDataProvider(): array
     {
@@ -128,27 +128,12 @@ class CreateCollectionTest extends TestCase
                 'requestContent' => Arr::except(self::VALID_REQUEST_CONTENT, ['name']),
                 'expectedJsonStructure' => ['message', 'errors' => ['name']],
             ],
-            'is_required: invalid' => [
+            'is_hidden: invalid' => [
                 'requestContent' => array_merge(
                     self::VALID_REQUEST_CONTENT,
-                    ['is_required' => 'yo']
+                    ['is_hidden' => 'yo']
                 ),
-                'expectedJsonStructure' => ['message', 'errors' => ['is_required']],
-            ],
-            'is_required: missing' => [
-                'requestContent' => Arr::except(self::VALID_REQUEST_CONTENT, ['is_required']),
-                'expectedJsonStructure' => ['message', 'errors' => ['is_required']],
-            ],
-            'field_type: invalid' => [
-                'requestContent' => array_merge(
-                    self::VALID_REQUEST_CONTENT,
-                    ['field_type' => 'what']
-                ),
-                'expectedJsonStructure' => ['message', 'errors' => ['field_type']],
-            ],
-            'field_type: missing' => [
-                'requestContent' => Arr::except(self::VALID_REQUEST_CONTENT, ['field_type']),
-                'expectedJsonStructure' => ['message', 'errors' => ['field_type']],
+                'expectedJsonStructure' => ['message', 'errors' => ['is_hidden']],
             ],
         ];
     }
