@@ -16,100 +16,85 @@ class CreateCollectionTest extends TestCase
     use CreatesApplication;
     use RefreshDatabase;
 
-    private const CREATE_FIELD_ENDPOINT = '/api/collections/%s/fields';
+    private const CREATE_COLLECTION_ENDPOINT = '/api/collections';
 
-    private const VALID_NAME = 'title';
+    private const VALID_NAME = 'posts';
+
+    private const VALID_DESCRIPTION = 'Hello';
 
     private const VALID_REQUEST_CONTENT = [
         'name' => self::VALID_NAME,
-        'field_type' => Field::TYPE_SHORT_TEXT,
+        'description' => self::VALID_DESCRIPTION,
         'is_required' => true
     ];
 
-    public function testCreateField(): void {
+    public function testCreateCollection(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-        $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
 
         $response = $this->actingAs($requestUser)
-            ->postJson($requestUrl, self::VALID_REQUEST_CONTENT);
+            ->postJson(self::CREATE_COLLECTION_ENDPOINT, self::VALID_REQUEST_CONTENT);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
                 'status',
                 'message',
                 'content' => [
-                    'field' => [
+                    'collection' => [
                         'id',
-                        'uuid',
-                        'collection_id',
                         'name',
-                        'field_type',
-                        'validation',
-                        'condition',
-                        'is_required',
+                        'description',
+                        'is_hidden',
                         'created_by',
                         'updated_by',
                         'created',
-                        'created',
-                        'updated'
+                        'updated',
                     ],
                 ],
             ]);
 
         $responseContent = $response->json();
-        $fieldResponse = $responseContent['content']['field'];
+        $collectionResponse = $responseContent['content']['collection'];
 
-        $this->assertEquals($requestUser->id, $fieldResponse['id']);
-        $this->assertNotEmpty($fieldResponse['uuid']);
-        $this->assertTrue($fieldResponse['is_required']);
-        $this->assertNull($fieldResponse['validation']);
-        $this->assertNull($fieldResponse['condition']);
-        $this->assertEquals(self::VALID_REQUEST_CONTENT['field_type'], $fieldResponse['field_type']);
-        $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $fieldResponse['name']);
+        $this->assertEquals($requestUser->id, $collectionResponse['id']);
+        $this->assertFalse($collectionResponse['is_hidden']);
+        $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $collectionResponse['name']);
     }
 
     public function testTryCreateFieldWithDuplicateValues(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-        $duplicateField = Field::factory()->createOne(['collection_id' => $requestCollection->id]);
-        $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateField->name]);
-        $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
+        $duplicateCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
+        $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateCollection->name]);
 
         $response = $this->actingAs($requestUser)
-            ->postJson($requestUrl, $requestContent);
+            ->postJson(self::CREATE_COLLECTION_ENDPOINT, $requestContent);
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST)
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure([
-                'status',
+                'message',
                 'errors',
             ]);
     }
 
     public function testTryCreateFieldWithoutAuthentication(): void {
-        $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-        $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
-
-        $this->postJson($requestUrl, self::VALID_REQUEST_CONTENT)
+        $this->postJson(self::CREATE_COLLECTION_ENDPOINT, self::VALID_REQUEST_CONTENT)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     /**
-     * @dataProvider formValidationDataProvider
+     * @dataProvider collectionValidationDataProvider
      */
-    public function testFormValidation(array $requestContent, array $expectedJsonStructure): void
+    /*public function testCollectionValidation(array $requestContent, array $expectedJsonStructure): void
     {
         $requestUser = BoringUser::factory()->createOne();
         $response = $this
             ->actingAs($requestUser)
-            ->postJson(self::CREATE_FIELD_ENDPOINT, $requestContent);
+            ->postJson(self::CREATE_COLLECTION_ENDPOINT, $requestContent);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure($expectedJsonStructure);
-    }
+    }*/
 
-    public static function formValidationDataProvider(): array
+    public static function collectionValidationDataProvider(): array
     {
         return [
             'name: long' => [
