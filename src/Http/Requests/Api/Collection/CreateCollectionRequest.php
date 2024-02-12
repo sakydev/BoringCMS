@@ -17,6 +17,7 @@ class CreateCollectionRequest extends FormRequest
                 'min:3',
                 'max:50',
                 'regex:/^[0-9a-z_-]+$/i',
+                Rule::unique('collections', 'name')
             ],
             'is_hidden' => [
                 'sometimes',
