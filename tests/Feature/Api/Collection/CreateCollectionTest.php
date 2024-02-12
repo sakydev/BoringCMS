@@ -4,9 +4,9 @@ namespace Feature\Api\Forms;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
 use Sakydev\Boring\Models\Collection;
-use Sakydev\Boring\Models\Field;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\CreatesApplication;
 use Tests\TestCase;
@@ -58,6 +58,12 @@ class CreateCollectionTest extends TestCase
         $this->assertEquals($requestUser->id, $collectionResponse['id']);
         $this->assertFalse($collectionResponse['is_hidden']);
         $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $collectionResponse['name']);
+
+        // check default created table
+        $this->assertTrue(Schema::hasTable($collectionResponse['name']));
+        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'id'));
+        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'created_at'));
+        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'updated_at'));
     }
 
     public function testTryCreateFieldWithDuplicateValues(): void {
