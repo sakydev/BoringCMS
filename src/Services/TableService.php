@@ -3,15 +3,12 @@
 namespace Sakydev\Boring\Services;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 
 class TableService
 {
     private function getFieldsMap(): array {
-        // create
-    }
-
-    public function getDefaultFields(): array {
         return [
             'id' => [
                 'type' => 'primary',
@@ -27,6 +24,10 @@ class TableService
                 'default' => '',
             ],
         ];
+    }
+
+    public function getDefaultFields(): array {
+        return Arr::only($this->getFieldsMap(), ['id', 'created_at', 'updated_at']);
     }
 
     public function exists(string $name): bool {
