@@ -95,20 +95,24 @@ class CreateFieldTest extends TestCase
     }
 
     /**
-     * @dataProvider formValidationDataProvider
+     * @dataProvider fieldValidationDataProvider
      */
-    public function testFormValidation(array $requestContent, array $expectedJsonStructure): void
+    public function testFieldValidation(array $requestContent, array $expectedJsonStructure): void
     {
         $requestUser = BoringUser::factory()->createOne();
+        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
+        $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
+        $requestUser = BoringUser::factory()->createOne();
+
         $response = $this
             ->actingAs($requestUser)
-            ->postJson(self::CREATE_FIELD_ENDPOINT, $requestContent);
+            ->postJson($requestUrl, $requestContent);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure($expectedJsonStructure);
     }
 
-    public static function formValidationDataProvider(): array
+    public static function fieldValidationDataProvider(): array
     {
         return [
             'name: long' => [
