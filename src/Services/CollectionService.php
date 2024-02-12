@@ -10,7 +10,8 @@ class CollectionService
 {
     public function __construct(
         readonly CollectionRepository $collectionRepository,
-        readonly TableService $tableService
+        readonly TableService $tableService,
+        readonly FieldService $fieldService,
     ) {}
 
     public function store(array $content, int $userId): Collection {
@@ -20,7 +21,9 @@ class CollectionService
 
         $collection = $this->collectionRepository->store($content, $userId);
 
-        $this->tableService->createWithDefaults($content['name']);
+        $defaultFields = $this->tableService->getDefaultFields();
+        $this->tableService->store($content['name'], $defaultFields);
+        $this->fieldService->storeMany($defaultFields, $collection->id);
 
         return $collection;
     }
