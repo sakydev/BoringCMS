@@ -64,6 +64,9 @@ class CreateCollectionTest extends TestCase
         $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'id'));
         $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'created_at'));
         $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'updated_at'));
+
+        // check fields have been populated
+        $this->assertDatabaseCount('fields', 3);
     }
 
     public function testTryCreateFieldWithDuplicateValues(): void {
