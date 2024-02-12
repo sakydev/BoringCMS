@@ -11,7 +11,7 @@ class Field extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['created_at', 'updated_at'];
+    protected $fillable = ['collection_id', 'name', 'field_type', 'validation', 'condition', 'is_required'];
 
     public const TYPE_SHORT_TEXT = 'short_text';
     public const TYPE_LONG_TEXT = 'long_text';
