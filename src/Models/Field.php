@@ -21,6 +21,7 @@ class Field extends Model
     public const TYPE_INTEGER = 'integer';
     public const TYPE_LIST = 'list';
     public const TYPE_JSON = 'json';
+    public const TYPE_TIMESTAMP = 'timestamp';
 
     public const SUPPORTED_TYPES = [
         self::TYPE_SHORT_TEXT => 'string',
@@ -30,7 +31,8 @@ class Field extends Model
         self::TYPE_FLOAT => 'float',
         self::TYPE_INTEGER => 'integer',
         self::TYPE_LIST => 'array',
-        self::TYPE_JSON => 'json'
+        self::TYPE_JSON => 'json',
+        self::TYPE_TIMESTAMP => 'timestamp',
     ];
 
     /**

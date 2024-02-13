@@ -25,18 +25,13 @@ class FieldService
         return $this->fieldRepository->list($page, $limit);
     }
 
-    public function store(array $content, string $collectionName): Field {
-        $collectionDetails = $this->collectionRepository->getByName($collectionName);
-        if (!$collectionDetails) {
-            throw new NotFoundException('item.error.notFound');
-        }
-
-        $nameExists = $this->fieldRepository->nameExists($content['name'], $collectionDetails->id);
+    public function store(array $content, int $collectionId): Field {
+        $nameExists = $this->fieldRepository->nameExists($content['name'], $collectionId);
         if ($nameExists) {
             throw new BadRequestException('item.error.alreadyExists');
         }
 
-        return $this->fieldRepository->store($content, $collectionDetails->id);
+        return $this->fieldRepository->store($content, $collectionId);
     }
 
     public function storeMany(array $content, int $collectionId): Collection {

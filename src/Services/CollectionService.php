@@ -11,6 +11,10 @@ class CollectionService
         readonly CollectionRepository $collectionRepository,
     ) {}
 
+    public function getByName(string $name): Collection {
+        return $this->collectionRepository->getByName($name);
+    }
+
     public function store(array $content, int $userId): Collection {
         return $this->collectionRepository->store($content, $userId);
     }

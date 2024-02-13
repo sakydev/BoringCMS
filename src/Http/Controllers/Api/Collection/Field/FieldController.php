@@ -9,18 +9,23 @@ use Illuminate\Support\Facades\Log;
 use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Http\Requests\Api\Collection\Field\CreateFieldRequest;
+use Sakydev\Boring\Http\Requests\Api\Collection\Field\UpdatedFieldRequest;
 use Sakydev\Boring\Resources\Api\FieldResource;
 use Sakydev\Boring\Resources\Api\Responses\BadRequestErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\ExceptionErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\NotFoundErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\SuccessResponse;
+use Sakydev\Boring\Services\CollectionFieldService;
 use Sakydev\Boring\Services\FieldService;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class FieldController
 {
-    public function __construct(readonly FieldService $fieldService) {}
+    public function __construct(
+        readonly FieldService $fieldService,
+        readonly CollectionFieldService $collectionFieldService
+    ) {}
 
     public function index(Request $request): JsonResponse {
         try {
@@ -60,7 +65,8 @@ class FieldController
 
     public function store(CreateFieldRequest $createRequest, string $collectionName): JsonResponse {
         try {
-            $field = $this->fieldService->store($createRequest->validated(), $collectionName);
+            $userId = Auth::id();
+            $field = $this->collectionFieldService->storeField($createRequest->validated(), $collectionName, $userId);
 
             return new SuccessResponse('item.success.createOne', [
                 'field' => new FieldResource($field),
@@ -74,7 +80,7 @@ class FieldController
         }
     }
 
-    public function update(UpdateFormRequest $updateRequest, $slug): JsonResponse
+    public function update(UpdatedFieldRequest $updateRequest, $slug): JsonResponse
     {
         try {
             $userId = Auth::id();
@@ -94,10 +100,10 @@ class FieldController
         }
     }
 
-    public function destroy(string $slug): JsonResponse
+    public function destroy(string $fieldUUID): JsonResponse
     {
         try {
-            $this->fieldService->destroyByUUID($slug);
+            $this->collectionFieldService->destroyField($fieldUUID);
 
             return new SuccessResponse('item.success.destroyOne', [], Response::HTTP_NO_CONTENT);
         } catch (NotFoundException $exception) {

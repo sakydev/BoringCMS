@@ -4,6 +4,7 @@ namespace Sakydev\Boring\Services;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Sakydev\Boring\Models\Field;
 
 class TableService
 {
@@ -11,6 +12,7 @@ class TableService
         return [
             'id' => [
                 'field_type' => 'primary',
+                'is_default' => true,
             ],
             'created_at' => [
                 'field_type' => 'timestamp',
@@ -39,6 +41,20 @@ class TableService
         });
     }
 
+    public function update(string $name, array $content): void {
+        Schema::table($name, function (Blueprint $table) use ($content) {
+            $this->storeField($table, $content['name'], ['field_type' => $content['field_type']]);
+        });
+    }
+
+    public function updateMany(string $name, array $content): void {
+        Schema::table($name, function (Blueprint $table) use ($content) {
+            foreach ($content as $fieldName => $fieldRules) {
+                $this->storeField($table, $fieldName, $fieldRules);
+            }
+        });
+    }
+
     public function storeWithDefaults(string $name): void {
         $this->store($name, $this->getDefaultFields());
     }
@@ -46,26 +62,25 @@ class TableService
     private function storeField(Blueprint $table, string $name, array $rules): void {
         switch ($rules['field_type']) {
             case 'primary':
-                $table->id($name);
+                $field = $table->id($name);
                 break;
-            case 'string':
-                $table->string($name);
+            case Field::TYPE_SHORT_TEXT:
+                $field = $table->string($name);
                 break;
-            case 'timestamp':
+            case Field::TYPE_TIMESTAMP:
                 $field = $table->timestamp($name);
-
-                if ($rules['is_nullable']) {
-                    $field->nullable();
-                }
-
-                if (!empty($rules['default'])) {
-                    $field->default($rules['default']);
-                }
-
                 break;
             default:
                 // Handle other types as needed
                 break;
+        }
+
+        if (!empty($rules['is_nullable'])) {
+            $field->nullable();
+        }
+
+        if (!empty($rules['default'])) {
+            $field->default($rules['default']);
         }
     }
 }

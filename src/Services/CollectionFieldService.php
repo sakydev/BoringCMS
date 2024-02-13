@@ -3,7 +3,9 @@
 namespace Sakydev\Boring\Services;
 
 use Sakydev\Boring\Exceptions\BadRequestException;
+use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Models\Collection;
+use Sakydev\Boring\Models\Field;
 
 class CollectionFieldService
 {
@@ -35,7 +37,21 @@ class CollectionFieldService
 
     public function updateCollection() {}
     public function destroyCollection() {}
-    public function storeField() {}
+
+    public function storeField(array $content, string $collectionName, int $userId): Field {
+        $collectionDetails = $this->collectionService->getByName($collectionName);
+        if (!$collectionDetails) {
+            throw new NotFoundException('item.error.notFound');
+        }
+
+        $this->collectionService->update($content, $userId);
+        $this->tableService->update($collectionName, $content);
+
+        return $this->fieldService->store($content, $collectionDetails->id);
+    }
+
     public function updateField() {}
-    public function deleteField() {}
+    public function destroyField(string $fieldUUID) {
+        $this->fieldService->destroyByUUID($fieldUUID);
+    }
 }
