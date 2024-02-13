@@ -17,7 +17,7 @@ class FieldService
         readonly CollectionRepository $collectionRepository,
     ) {}
 
-    public function getByUUID(string $uuid): Field {
+    public function getByUUID(string $uuid): ?Field {
         return $this->fieldRepository->getByUUID($uuid);
     }
 

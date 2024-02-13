@@ -11,7 +11,7 @@ class CollectionService
         readonly CollectionRepository $collectionRepository,
     ) {}
 
-    public function getByName(string $name): Collection {
+    public function getByName(string $name): ?Collection {
         return $this->collectionRepository->getByName($name);
     }
 

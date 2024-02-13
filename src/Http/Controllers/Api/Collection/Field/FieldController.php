@@ -80,13 +80,12 @@ class FieldController
         }
     }
 
-    public function update(UpdatedFieldRequest $updateRequest, $slug): JsonResponse
-    {
+    public function update(UpdatedFieldRequest $updateRequest): JsonResponse {
         try {
             $userId = Auth::id();
             $updatedFields = $updateRequest->only(['validation', 'condition', 'is_required']);
 
-            $form = $this->fieldService->update($updatedFields, $slug, $userId);
+            $form = $this->fieldService->update($updatedFields, $updateRequest->route('fieldUUID'), $userId);
 
             return new SuccessResponse('item.success.updateOne', [
                 'field' => new FieldResource($form),
@@ -100,10 +99,10 @@ class FieldController
         }
     }
 
-    public function destroy(string $fieldUUID): JsonResponse
+    public function destroy(string $collectionName, string $fieldUUID): JsonResponse
     {
         try {
-            $this->collectionFieldService->destroyField($fieldUUID);
+            $this->collectionFieldService->destroyField($fieldUUID, $collectionName);
 
             return new SuccessResponse('item.success.destroyOne', [], Response::HTTP_NO_CONTENT);
         } catch (NotFoundException $exception) {

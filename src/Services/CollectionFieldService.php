@@ -51,7 +51,18 @@ class CollectionFieldService
     }
 
     public function updateField() {}
-    public function destroyField(string $fieldUUID) {
+    public function destroyField(string $fieldUUID, string $collectionName): void {
+        $collectionDetails = $this->collectionService->getByName($collectionName);
+        if (!$collectionDetails) {
+            throw new NotFoundException('item.error.notFound');
+        }
+
+        $fieldDetails = $this->fieldService->getByUUID($fieldUUID);
+        if (!$fieldDetails) {
+            throw new NotFoundException('item.error.notFound');
+        }
+
         $this->fieldService->destroyByUUID($fieldUUID);
+        $this->tableService->dropColumn($collectionName, $fieldDetails->name);
     }
 }

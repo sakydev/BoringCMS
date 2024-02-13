@@ -9,7 +9,7 @@ use Sakydev\Boring\Models\Field;
 
 class FieldRepository
 {
-    public function getByUUID(string $uuid): Field {
+    public function getByUUID(string $uuid): ?Field {
         return (new Field())->where('uuid', $uuid)->first();
     }
 
@@ -61,7 +61,9 @@ class FieldRepository
 
     public function update(Field $field, array $updatedFields, int $userId): Field {
         $field->fill($updatedFields);
-        $field->updated_by = $userId;
+
+        // TODO: handle later
+        // $field->updated_by = $userId;
 
         $field->save();
         $field->refresh();

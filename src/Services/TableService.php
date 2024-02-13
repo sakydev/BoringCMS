@@ -83,4 +83,8 @@ class TableService
             $field->default($rules['default']);
         }
     }
+
+    public function dropColumn(string $name, string $column): void {
+        Schema::dropColumns($name, $column);
+    }
 }
