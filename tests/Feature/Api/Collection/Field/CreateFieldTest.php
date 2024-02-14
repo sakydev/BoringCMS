@@ -2,20 +2,18 @@
 
 namespace Feature\Api\Collection\Field;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
-use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Models\Field;
+use Sakydev\Boring\Services\BoringTestService;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\CreatesApplication;
 use Tests\TestCase;
 
 class CreateFieldTest extends TestCase
 {
-    use CreatesApplication;
-    use RefreshDatabase;
 
+    private $boringTestService;
     private const CREATE_FIELD_ENDPOINT = '/api/collections/%s/fields';
 
     private const VALID_NAME = 'title';
@@ -26,9 +24,16 @@ class CreateFieldTest extends TestCase
         'is_required' => true
     ];
 
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->boringTestService = $this->app->make(BoringTestService::class);
+    }
+
     public function testCreateField(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
 
         $response = $this->actingAs($requestUser)
@@ -66,12 +71,20 @@ class CreateFieldTest extends TestCase
         $this->assertNull($fieldResponse['condition']);
         $this->assertEquals(self::VALID_REQUEST_CONTENT['field_type'], $fieldResponse['field_type']);
         $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $fieldResponse['name']);
+
+        $this->assertTrue(Schema::hasTable($requestCollection['name']));
+
+        $this->assertTrue(Schema::hasColumn($requestCollection['name'], self::VALID_REQUEST_CONTENT['name']));
     }
 
     public function testTryCreateFieldWithDuplicateValues(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-        $duplicateField = Field::factory()->createOne(['collection_id' => $requestCollection->id]);
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
+        $duplicateField = $this->boringTestService->storeTestField(
+            self::VALID_REQUEST_CONTENT,
+            $requestCollection->name,
+            $requestUser->id,
+        );
         $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateField->name]);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
 
@@ -87,7 +100,7 @@ class CreateFieldTest extends TestCase
 
     public function testTryCreateFieldWithoutAuthentication(): void {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
 
         $this->postJson($requestUrl, self::VALID_REQUEST_CONTENT)
@@ -100,9 +113,8 @@ class CreateFieldTest extends TestCase
     public function testFieldValidation(array $requestContent, array $expectedJsonStructure): void
     {
         $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
-        $requestUser = BoringUser::factory()->createOne();
 
         $response = $this
             ->actingAs($requestUser)
