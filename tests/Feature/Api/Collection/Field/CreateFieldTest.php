@@ -2,6 +2,7 @@
 
 namespace Feature\Api\Collection\Field;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
@@ -12,6 +13,7 @@ use Tests\TestCase;
 
 class CreateFieldTest extends TestCase
 {
+    use RefreshDatabase;
 
     private $boringTestService;
     private const CREATE_FIELD_ENDPOINT = '/api/collections/%s/fields';
@@ -31,6 +33,7 @@ class CreateFieldTest extends TestCase
         $this->boringTestService = $this->app->make(BoringTestService::class);
     }
 
+    // TODO: test all field types
     public function testCreateField(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);

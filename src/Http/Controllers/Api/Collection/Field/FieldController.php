@@ -108,6 +108,7 @@ class FieldController
         } catch (NotFoundException $exception) {
             return new NotFoundErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
+            dd($throwable);
             Log::error('Delete field failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
