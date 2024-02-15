@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Services;
 
+use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Repositories\CollectionRepository;
 
@@ -12,7 +13,12 @@ class CollectionService
     ) {}
 
     public function getByName(string $name): ?Collection {
-        return $this->collectionRepository->getByName($name);
+        $collection = $this->collectionRepository->getByName($name);
+        if (!$collection) {
+            throw new NotFoundException('item.error.notFound');
+        }
+
+        return $collection;
     }
 
     public function store(array $content, int $userId): Collection {
