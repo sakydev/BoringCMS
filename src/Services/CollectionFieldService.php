@@ -48,10 +48,11 @@ class CollectionFieldService
             throw new NotFoundException('item.error.notFound');
         }
 
+        $field = $this->fieldService->store($content, $collectionDetails->id);
         $this->collectionService->update($content, $userId);
         $this->tableService->update($collectionName, $content);
 
-        return $this->fieldService->store($content, $collectionDetails->id);
+        return $field;
     }
 
     public function updateField() {}
