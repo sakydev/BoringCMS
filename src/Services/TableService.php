@@ -66,10 +66,21 @@ class TableService
                 $field = $table->string($name);
                 break;
             case Field::TYPE_LONG_TEXT:
+            case Field::TYPE_MARKDOWN:
+            case Field::TYPE_RICHTEXT:
                 $field = $table->longText($name);
                 break;
             case Field::TYPE_TIMESTAMP:
                 $field = $table->timestamp($name);
+                break;
+            case Field::TYPE_FLOAT:
+                $field = $table->float($name);
+                break;
+            case Field::TYPE_INTEGER:
+                $field = $table->integer($name);
+                break;
+            case Field::TYPE_JSON:
+                $field = $table->json($name);
                 break;
             default:
                 // Handle other types as needed

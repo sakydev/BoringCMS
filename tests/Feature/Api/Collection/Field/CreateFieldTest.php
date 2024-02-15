@@ -197,15 +197,6 @@ class CreateFieldTest extends TestCase
                     ]
                 ),
             ],
-            'field_type: ' . Field::TYPE_LIST => [
-                'requestContent' => array_merge(
-                    self::VALID_REQUEST_CONTENT,
-                    [
-                        'field_type' => Field::TYPE_SHORT_TEXT,
-                        'is_required' => false,
-                    ]
-                ),
-            ],
             'field_type: ' . Field::TYPE_JSON => [
                 'requestContent' => array_merge(
                     self::VALID_REQUEST_CONTENT,

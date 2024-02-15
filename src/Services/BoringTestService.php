@@ -33,13 +33,20 @@ class BoringTestService
 
         $content = [
             'name' => $content['name'] ?? fake()->bothify('??????????'),
-            // TODO: pick a random out of all field types
-            'field_type' => $content['description'] ?? Field::TYPE_SHORT_TEXT,
+            'field_type' => $content['description'] ?? array_rand(Field::SUPPORTED_TYPES),
             'is_required' => $content['is_hidden'] ?? fake()->boolean(),
         ];
 
         return $this->collectionFieldService->storeField($content, $collectionName, $userId);
     }
 
+    public function storeManyTestFields(int $count, string $collectionName, ?int $userId) {
+        $response = collect();
+        for ($i = 0; $i < $count; $i++) {
+            $created = $this->storeTestField([], $collectionName, $userId);
+            $response->push($created);
+        }
 
+        return $response;
+    }
 }

@@ -19,7 +19,7 @@ class Field extends Model
     public const TYPE_RICHTEXT = 'richtext';
     public const TYPE_FLOAT = 'float';
     public const TYPE_INTEGER = 'integer';
-    public const TYPE_LIST = 'list';
+    // public const TYPE_LIST = 'list';
     public const TYPE_JSON = 'json';
     public const TYPE_TIMESTAMP = 'timestamp';
 
@@ -30,7 +30,7 @@ class Field extends Model
         self::TYPE_RICHTEXT => 'text',
         self::TYPE_FLOAT => 'float',
         self::TYPE_INTEGER => 'integer',
-        self::TYPE_LIST => 'array',
+        // self::TYPE_LIST => 'array',
         self::TYPE_JSON => 'json',
         self::TYPE_TIMESTAMP => 'timestamp',
     ];
@@ -42,7 +42,7 @@ class Field extends Model
         self::TYPE_RICHTEXT => 'text',
         self::TYPE_FLOAT => 'float',
         self::TYPE_INTEGER => 'integer',
-        self::TYPE_LIST => 'array',
+        //self::TYPE_LIST => 'array',
         self::TYPE_JSON => 'json',
         self::TYPE_TIMESTAMP => 'timestamp',
     ];
