@@ -49,10 +49,10 @@ class FieldController
 
     public function show(Request $request): JsonResponse {
         try {
-            $form = $this->fieldService->getByUUID($request->route('fieldUUID'));
+            $field = $this->fieldService->getByUUID($request->route('fieldUUID'));
 
             return new SuccessResponse('item.success.findOne', [
-                'field' => new FieldResource($form),
+                'field' => new FieldResource($field),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
             return new NotFoundErrorResponse($exception->getMessage());
@@ -87,10 +87,10 @@ class FieldController
             $userId = Auth::id();
             $updatedFields = $updateRequest->only(['validation', 'condition', 'is_required']);
 
-            $form = $this->fieldService->update($updatedFields, $updateRequest->route('fieldUUID'), $userId);
+            $field = $this->fieldService->update($updatedFields, $updateRequest->route('fieldUUID'), $userId);
 
             return new SuccessResponse('item.success.updateOne', [
-                'field' => new FieldResource($form),
+                'field' => new FieldResource($field),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
             return new NotFoundErrorResponse($exception->getMessage());
