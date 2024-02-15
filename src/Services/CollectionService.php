@@ -2,7 +2,6 @@
 
 namespace Sakydev\Boring\Services;
 
-use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Repositories\CollectionRepository;
 
@@ -10,22 +9,14 @@ class CollectionService
 {
     public function __construct(
         readonly CollectionRepository $collectionRepository,
-        readonly TableService $tableService,
-        readonly FieldService $fieldService,
     ) {}
 
+    public function getByName(string $name): ?Collection {
+        return $this->collectionRepository->getByName($name);
+    }
+
     public function store(array $content, int $userId): Collection {
-        if ($this->tableService->exists($content['name'])) {
-            throw new BadRequestException('item.error.invalidValue');
-        }
-
-        $collection = $this->collectionRepository->store($content, $userId);
-
-        $defaultFields = $this->tableService->getDefaultFields();
-        $this->tableService->store($content['name'], $defaultFields);
-        $this->fieldService->storeMany($defaultFields, $collection->id);
-
-        return $collection;
+        return $this->collectionRepository->store($content, $userId);
     }
 
     public function update(array $content, int $userId) {
