@@ -58,6 +58,7 @@ class CollectionFieldService
 
     /**
      * @throws NotFoundException
+     * @throws BadRequestException
      */
     public function destroyField(string $fieldUUID, string $collectionName): void {
         $collectionDetails = $this->collectionService->getByName($collectionName);

@@ -33,7 +33,6 @@ class CreateFieldTest extends TestCase
         $this->boringTestService = $this->app->make(BoringTestService::class);
     }
 
-    // TODO: test all field types
     public function testCreateField(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
@@ -78,6 +77,61 @@ class CreateFieldTest extends TestCase
         $this->assertTrue(Schema::hasTable($requestCollection['name']));
 
         $this->assertTrue(Schema::hasColumn($requestCollection['name'], self::VALID_REQUEST_CONTENT['name']));
+    }
+
+    public function testCreateLongTextField(): void {
+        $requestUser = BoringUser::factory()->createOne();
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
+        $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
+        $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['field_type' => Field::TYPE_LONG_TEXT]);
+
+        $response = $this->actingAs($requestUser)
+            ->postJson($requestUrl, $requestContent);
+
+        $response->assertStatus(Response::HTTP_CREATED)
+            ->assertJsonStructure([
+                'status',
+                'message',
+                'content' => [
+                    'field' => [
+                        'id',
+                        'uuid',
+                        'collection_id',
+                        'name',
+                        'field_type',
+                        'validation',
+                        'condition',
+                        'is_required',
+                        'created_by',
+                        'updated_by',
+                        'created',
+                        'created',
+                        'updated'
+                    ],
+                ],
+            ]);
+
+        $responseContent = $response->json();
+        $fieldResponse = $responseContent['content']['field'];
+
+        $this->assertNotEmpty($fieldResponse['uuid']);
+        $this->assertTrue($fieldResponse['is_required']);
+        $this->assertNull($fieldResponse['validation']);
+        $this->assertNull($fieldResponse['condition']);
+        $this->assertEquals($requestContent['field_type'], $fieldResponse['field_type']);
+        $this->assertEquals($requestContent['name'], $fieldResponse['name']);
+
+        $this->assertTrue(Schema::hasTable($requestCollection['name']));
+
+        $tableColumns = Schema::getColumns($requestCollection['name']);
+        $columnDetails = Arr::first($tableColumns, function ($value) use ($requestContent) {
+            return Arr::get($value, 'name') === $requestContent['name'];
+        });
+
+        $this->assertNotEmpty($columnDetails);
+        $this->assertEquals($columnDetails['type'], Field::SUPPORTED_TYPES[$requestContent['field_type']]);
+        $this->assertEquals($columnDetails['nullable'], !$requestContent['is_required']);
+        $this->assertNull($columnDetails['default']);
     }
 
     public function testTryCreateFieldWithDuplicateValues(): void {

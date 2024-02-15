@@ -16,13 +16,11 @@ class TableService
             ],
             'created_at' => [
                 'field_type' => 'timestamp',
-                'is_nullable' => false,
                 'is_default' => true,
                 'default' => '',
             ],
             'updated_at' => [
                 'field_type' => 'timestamp',
-                'is_nullable' => false,
                 'is_default' => true,
                 'default' => '',
             ],
@@ -43,7 +41,7 @@ class TableService
 
     public function update(string $name, array $content): void {
         Schema::table($name, function (Blueprint $table) use ($content) {
-            $this->storeField($table, $content['name'], ['field_type' => $content['field_type']]);
+            $this->storeField($table, $content['name'], $content);
         });
     }
 
@@ -67,6 +65,9 @@ class TableService
             case Field::TYPE_SHORT_TEXT:
                 $field = $table->string($name);
                 break;
+            case Field::TYPE_LONG_TEXT:
+                $field = $table->longText($name);
+                break;
             case Field::TYPE_TIMESTAMP:
                 $field = $table->timestamp($name);
                 break;
@@ -75,11 +76,9 @@ class TableService
                 break;
         }
 
-        if (!empty($rules['is_nullable'])) {
+        if (!empty($rules['is_nullable']) || (empty($rules['is_required']) && empty($rules['is_default']))) {
             $field->nullable();
-        }
-
-        if (!empty($rules['default'])) {
+        } elseif (!empty($rules['default'])) {
             $field->default($rules['default']);
         }
     }
