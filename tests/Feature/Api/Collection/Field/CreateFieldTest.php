@@ -33,57 +33,13 @@ class CreateFieldTest extends TestCase
         $this->boringTestService = $this->app->make(BoringTestService::class);
     }
 
-    public function testCreateField(): void {
+    /**
+     * @dataProvider fieldTypeDataProvider
+     */
+    public function testCreateFieldWithDifferentTypes(array $requestContent): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
         $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
-
-        $response = $this->actingAs($requestUser)
-            ->postJson($requestUrl, self::VALID_REQUEST_CONTENT);
-
-        $response->assertStatus(Response::HTTP_CREATED)
-            ->assertJsonStructure([
-                'status',
-                'message',
-                'content' => [
-                    'field' => [
-                        'id',
-                        'uuid',
-                        'collection_id',
-                        'name',
-                        'field_type',
-                        'validation',
-                        'condition',
-                        'is_required',
-                        'created_by',
-                        'updated_by',
-                        'created',
-                        'created',
-                        'updated'
-                    ],
-                ],
-            ]);
-
-        $responseContent = $response->json();
-        $fieldResponse = $responseContent['content']['field'];
-
-        $this->assertNotEmpty($fieldResponse['uuid']);
-        $this->assertTrue($fieldResponse['is_required']);
-        $this->assertNull($fieldResponse['validation']);
-        $this->assertNull($fieldResponse['condition']);
-        $this->assertEquals(self::VALID_REQUEST_CONTENT['field_type'], $fieldResponse['field_type']);
-        $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $fieldResponse['name']);
-
-        $this->assertTrue(Schema::hasTable($requestCollection['name']));
-
-        $this->assertTrue(Schema::hasColumn($requestCollection['name'], self::VALID_REQUEST_CONTENT['name']));
-    }
-
-    public function testCreateLongTextField(): void {
-        $requestUser = BoringUser::factory()->createOne();
-        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
-        $requestUrl = sprintf(self::CREATE_FIELD_ENDPOINT, $requestCollection->name);
-        $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['field_type' => Field::TYPE_LONG_TEXT]);
 
         $response = $this->actingAs($requestUser)
             ->postJson($requestUrl, $requestContent);
@@ -115,9 +71,9 @@ class CreateFieldTest extends TestCase
         $fieldResponse = $responseContent['content']['field'];
 
         $this->assertNotEmpty($fieldResponse['uuid']);
-        $this->assertTrue($fieldResponse['is_required']);
         $this->assertNull($fieldResponse['validation']);
         $this->assertNull($fieldResponse['condition']);
+        $this->assertEquals($requestContent['is_required'], $fieldResponse['is_required']);
         $this->assertEquals($requestContent['field_type'], $fieldResponse['field_type']);
         $this->assertEquals($requestContent['name'], $fieldResponse['name']);
 
@@ -129,9 +85,12 @@ class CreateFieldTest extends TestCase
         });
 
         $this->assertNotEmpty($columnDetails);
-        $this->assertEquals($columnDetails['type'], Field::SUPPORTED_TYPES[$requestContent['field_type']]);
-        $this->assertEquals($columnDetails['nullable'], !$requestContent['is_required']);
         $this->assertNull($columnDetails['default']);
+        $this->assertEquals($columnDetails['nullable'], !$requestContent['is_required']);
+        $this->assertEquals(
+            $columnDetails['type'],
+            Field::SUPPORTED_TYPES_COLUMN_MAPPING[$requestContent['field_type']]
+        );
     }
 
     public function testTryCreateFieldWithDuplicateValues(): void {
@@ -179,6 +138,93 @@ class CreateFieldTest extends TestCase
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->assertJsonStructure($expectedJsonStructure);
+    }
+
+    public static function fieldTypeDataProvider(): array
+    {
+        return [
+            'field_type: ' . Field::TYPE_SHORT_TEXT => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_LONG_TEXT => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => true,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_MARKDOWN => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_RICHTEXT => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_FLOAT => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_INTEGER => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_LIST => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_JSON => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+            'field_type: ' . Field::TYPE_TIMESTAMP => [
+                'requestContent' => array_merge(
+                    self::VALID_REQUEST_CONTENT,
+                    [
+                        'field_type' => Field::TYPE_SHORT_TEXT,
+                        'is_required' => false,
+                    ]
+                ),
+            ],
+        ];
     }
 
     public static function fieldValidationDataProvider(): array

@@ -35,6 +35,18 @@ class Field extends Model
         self::TYPE_TIMESTAMP => 'timestamp',
     ];
 
+    public const SUPPORTED_TYPES_COLUMN_MAPPING = [
+        self::TYPE_SHORT_TEXT => 'character varying(255)',
+        self::TYPE_LONG_TEXT => 'text',
+        self::TYPE_MARKDOWN => 'text',
+        self::TYPE_RICHTEXT => 'text',
+        self::TYPE_FLOAT => 'float',
+        self::TYPE_INTEGER => 'integer',
+        self::TYPE_LIST => 'array',
+        self::TYPE_JSON => 'json',
+        self::TYPE_TIMESTAMP => 'timestamp',
+    ];
+
     /**
      * Create a new factory instance for the model.
      */

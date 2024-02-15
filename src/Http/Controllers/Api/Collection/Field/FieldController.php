@@ -74,6 +74,7 @@ class FieldController
         } catch (BadRequestException $exception) {
             return new BadRequestErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
+            dd($throwable);
             Log::error('Create field failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
@@ -110,7 +111,6 @@ class FieldController
         } catch (NotFoundException $exception) {
             return new NotFoundErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
-            dd($throwable);
             Log::error('Delete field failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
