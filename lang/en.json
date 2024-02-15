@@ -23,6 +23,7 @@
             "invalidCreatePermissions": "User has insufficient permissions to create item",
             "invalidUpdatePermissions": "User has insufficient permissions to update item",
             "invalidValue": "User provied invalid item value",
+            "invalidUUID": "User provied invalid item UUID",
             "notFound": "Item not found"
         },
         "success": {

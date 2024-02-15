@@ -55,7 +55,6 @@ class DestroyFieldTest extends TestCase
         $this->deleteJson($requestUrl)->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
-    // TODO: also test invalid UUID syntax
     public function testTryDestroyFieldNonExistingField(): void {
         $fakeUUID = fake()->uuid();
         $requestUser = BoringUser::factory()->createOne();
@@ -65,5 +64,15 @@ class DestroyFieldTest extends TestCase
         $this->actingAs($requestUser)
             ->deleteJson($requestUrl)
             ->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testTryDestroyFieldInvalidUUID(): void {
+        $requestUser = BoringUser::factory()->createOne();
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
+        $requestUrl = sprintf(self::DESTROY_FIELD_ENDPOINT, $requestCollection->name, 'invalid-uuid');
+
+        $this->actingAs($requestUser)
+            ->deleteJson($requestUrl)
+            ->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 }

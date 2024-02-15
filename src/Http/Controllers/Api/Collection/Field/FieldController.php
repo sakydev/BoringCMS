@@ -54,8 +54,8 @@ class FieldController
             return new SuccessResponse('item.success.findOne', [
                 'field' => new FieldResource($form),
             ], Response::HTTP_OK);
-        } catch (NotFoundException $exception) {
-            return new NotFoundErrorResponse($exception->getMessage());
+        } catch (BadRequestException $exception) {
+            return new BadRequestErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
             Log::error('Fetch field failed', ['error' => $throwable->getMessage()]);
 
@@ -105,6 +105,8 @@ class FieldController
             $this->collectionFieldService->destroyField($fieldUUID, $collectionName);
 
             return new SuccessResponse('item.success.destroyOne', [], Response::HTTP_NO_CONTENT);
+        } catch (BadRequestException $exception) {
+            return new BadRequestErrorResponse($exception->getMessage());
         } catch (NotFoundException $exception) {
             return new NotFoundErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {

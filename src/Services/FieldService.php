@@ -4,6 +4,7 @@ namespace Sakydev\Boring\Services;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Ramsey\Uuid\Uuid;
 use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Models\Field;
@@ -17,7 +18,14 @@ class FieldService
         readonly CollectionRepository $collectionRepository,
     ) {}
 
+    /**
+     * @throws BadRequestException
+     */
     public function getByUUID(string $uuid): ?Field {
+        if (!Uuid::isValid($uuid)) {
+            throw new BadRequestException('item.error.invalidUUID');
+        }
+
         return $this->fieldRepository->getByUUID($uuid);
     }
 
@@ -25,6 +33,9 @@ class FieldService
         return $this->fieldRepository->list($page, $limit);
     }
 
+    /**
+     * @throws BadRequestException
+     */
     public function store(array $content, int $collectionId): Field {
         $nameExists = $this->fieldRepository->nameExists($content['name'], $collectionId);
         if ($nameExists) {
@@ -34,6 +45,9 @@ class FieldService
         return $this->fieldRepository->store($content, $collectionId);
     }
 
+    /**
+     * @throws BadRequestException
+     */
     public function storeMany(array $content, int $collectionId): Collection {
         $nameExists = $this->fieldRepository->anyNameExists(array_keys($content), $collectionId);
         if ($nameExists) {
@@ -57,12 +71,17 @@ class FieldService
 
     /**
      * @throws NotFoundException
+     * @throws BadRequestException
      */
-    public function destroyByUUID(string $slug): bool {
-        if (!$this->fieldRepository->existsByUUID($slug)) {
+    public function destroyByUUID(string $uuid): bool {
+        if (!Uuid::isValid($uuid)) {
+            throw new BadRequestException('item.error.invalidUUID');
+        }
+
+        if (!$this->fieldRepository->existsByUUID($uuid)) {
             throw new NotFoundException('item.error.notFound');
         }
 
-        return $this->fieldRepository->destroyByUUID($slug);
+        return $this->fieldRepository->destroyByUUID($uuid);
     }
 }

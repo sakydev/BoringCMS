@@ -38,6 +38,10 @@ class CollectionFieldService
     public function updateCollection() {}
     public function destroyCollection() {}
 
+
+    /**
+     * @throws NotFoundException
+     */
     public function storeField(array $content, string $collectionName, int $userId): Field {
         $collectionDetails = $this->collectionService->getByName($collectionName);
         if (!$collectionDetails) {
@@ -51,6 +55,10 @@ class CollectionFieldService
     }
 
     public function updateField() {}
+
+    /**
+     * @throws NotFoundException
+     */
     public function destroyField(string $fieldUUID, string $collectionName): void {
         $collectionDetails = $this->collectionService->getByName($collectionName);
         if (!$collectionDetails) {
