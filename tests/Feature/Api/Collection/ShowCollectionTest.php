@@ -53,7 +53,7 @@ class ShowCollectionTest extends TestCase
         $responseContent = $response->json();
         $collectionResponse = $responseContent['content']['collection'];
 
-        $this->assertNotEmpty($collectionResponse['name']);
+        $this->assertEquals($requestCollection->name, $collectionResponse['name']);
         $this->assertEquals($requestUser->id, $collectionResponse['created_by']);
     }
 

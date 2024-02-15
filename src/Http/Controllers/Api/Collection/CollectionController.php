@@ -26,9 +26,9 @@ class CollectionController
         readonly CollectionService $collectionService,
     ) {}
 
-    public function show(string $collectionName): JsonResponse {
+    public function show(string $name): JsonResponse {
         try {
-            $collection = $this->collectionService->getByName($collectionName);
+            $collection = $this->collectionService->getByName($name);
 
             return new SuccessResponse('item.success.findOne', [
                 'collection' => new CollectionResource($collection),
