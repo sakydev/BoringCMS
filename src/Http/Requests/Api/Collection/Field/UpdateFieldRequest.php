@@ -4,7 +4,7 @@ namespace Sakydev\Boring\Http\Requests\Api\Collection\Field;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatedFieldRequest extends FormRequest
+class UpdateFieldRequest extends FormRequest
 {
     public function rules()
     {

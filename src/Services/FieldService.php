@@ -20,13 +20,19 @@ class FieldService
 
     /**
      * @throws BadRequestException
+     * @throws NotFoundException
      */
     public function getByUUID(string $uuid): ?Field {
         if (!Uuid::isValid($uuid)) {
             throw new BadRequestException('item.error.invalidUUID');
         }
 
-        return $this->fieldRepository->getByUUID($uuid);
+        $field = $this->fieldRepository->getByUUID($uuid);
+        if (!$field) {
+            throw new NotFoundException('item.error.notFound');
+        }
+
+        return $field;
     }
 
     public function list(int $page, int $limit): LengthAwarePaginator {

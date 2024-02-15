@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Http\Requests\Api\Collection\Field\CreateFieldRequest;
-use Sakydev\Boring\Http\Requests\Api\Collection\Field\UpdatedFieldRequest;
+use Sakydev\Boring\Http\Requests\Api\Collection\Field\UpdateFieldRequest;
 use Sakydev\Boring\Resources\Api\FieldResource;
 use Sakydev\Boring\Resources\Api\Responses\BadRequestErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\ExceptionErrorResponse;
@@ -47,13 +47,15 @@ class FieldController
         }
     }
 
-    public function show(string $uuid): JsonResponse {
+    public function show(Request $request): JsonResponse {
         try {
-            $form = $this->fieldService->getByUUID($uuid);
+            $form = $this->fieldService->getByUUID($request->route('fieldUUID'));
 
             return new SuccessResponse('item.success.findOne', [
                 'field' => new FieldResource($form),
             ], Response::HTTP_OK);
+        } catch (NotFoundException $exception) {
+            return new NotFoundErrorResponse($exception->getMessage());
         } catch (BadRequestException $exception) {
             return new BadRequestErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
@@ -74,14 +76,13 @@ class FieldController
         } catch (BadRequestException $exception) {
             return new BadRequestErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
-            dd($throwable);
             Log::error('Create field failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
         }
     }
 
-    public function update(UpdatedFieldRequest $updateRequest): JsonResponse {
+    public function update(UpdateFieldRequest $updateRequest): JsonResponse {
         try {
             $userId = Auth::id();
             $updatedFields = $updateRequest->only(['validation', 'condition', 'is_required']);
