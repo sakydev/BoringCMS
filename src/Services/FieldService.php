@@ -24,12 +24,12 @@ class FieldService
      */
     public function getByUUID(string $uuid): ?Field {
         if (!Uuid::isValid($uuid)) {
-            throw new BadRequestException('item.error.invalidUUID');
+            throw new BadRequestException('item.error.field.invalidUUID');
         }
 
         $field = $this->fieldRepository->getByUUID($uuid);
         if (!$field) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.field.notFound');
         }
 
         return $field;
@@ -69,7 +69,7 @@ class FieldService
     public function update(array $updatedContent, string $uuid, int $userId): Field {
         $field = $this->fieldRepository->getByUUID($uuid);
         if (!$field) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.field.notFound');
         }
 
         return $this->fieldRepository->update($field, $updatedContent, $userId);
@@ -81,11 +81,11 @@ class FieldService
      */
     public function destroyByUUID(string $uuid): bool {
         if (!Uuid::isValid($uuid)) {
-            throw new BadRequestException('item.error.invalidUUID');
+            throw new BadRequestException('item.error.field.invalidUUID');
         }
 
         if (!$this->fieldRepository->existsByUUID($uuid)) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.field.notFound');
         }
 
         return $this->fieldRepository->destroyByUUID($uuid);

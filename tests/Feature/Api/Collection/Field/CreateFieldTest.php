@@ -70,6 +70,8 @@ class CreateFieldTest extends TestCase
         $responseContent = $response->json();
         $fieldResponse = $responseContent['content']['field'];
 
+        $this->assertEquals(phrase('item.success.field.createOne'), $responseContent['message']);
+
         $this->assertNotEmpty($fieldResponse['uuid']);
         $this->assertNull($fieldResponse['validation']);
         $this->assertNull($fieldResponse['condition']);

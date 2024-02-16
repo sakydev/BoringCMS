@@ -45,7 +45,7 @@ class CollectionFieldService
     public function storeField(array $content, string $collectionName, int $userId): Field {
         $collectionDetails = $this->collectionService->getByName($collectionName);
         if (!$collectionDetails) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.collection.notFound');
         }
 
         $field = $this->fieldService->store($content, $collectionDetails->id);
@@ -64,12 +64,12 @@ class CollectionFieldService
     public function destroyField(string $fieldUUID, string $collectionName): void {
         $collectionDetails = $this->collectionService->getByName($collectionName);
         if (!$collectionDetails) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.collection.notFound');
         }
 
         $fieldDetails = $this->fieldService->getByUUID($fieldUUID);
         if (!$fieldDetails) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.field.notFound');
         }
 
         $this->fieldService->destroyByUUID($fieldUUID);
