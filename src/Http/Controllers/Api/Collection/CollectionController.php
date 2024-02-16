@@ -26,6 +26,26 @@ class CollectionController
         readonly CollectionService $collectionService,
     ) {}
 
+    public function index(Request $request): JsonResponse {
+        try {
+            $page = $request->query('page', 1);
+            $limit = $request->query('limit', 20);
+
+            $page = max(1, (int)$page);
+            $limit = max(1, min(100, (int)$limit));
+
+            $fields = $this->collectionService->list($page, $limit);
+
+            return new SuccessResponse('item.success.findMany', [
+                'collections' => CollectionResource::collection($fields),
+            ], Response::HTTP_OK);
+        } catch (Throwable $throwable) {
+            Log::error('List collections failed', ['error' => $throwable->getMessage()]);
+
+            return new ExceptionErrorResponse('general.error.unknown');
+        }
+    }
+
     public function show(string $name): JsonResponse {
         try {
             $collection = $this->collectionService->getByName($name);

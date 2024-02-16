@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Services;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Repositories\CollectionRepository;
@@ -19,6 +20,10 @@ class CollectionService
         }
 
         return $collection;
+    }
+
+    public function list(int $page, int $limit): LengthAwarePaginator {
+        return $this->collectionRepository->list($page, $limit);
     }
 
     public function store(array $content, int $userId): Collection {

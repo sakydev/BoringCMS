@@ -16,7 +16,7 @@ class ListFieldTest extends TestCase
     use RefreshDatabase;
 
     private $boringTestService;
-    private const SHOW_FIELD_ENDPOINT = '/api/collections/%s/fields';
+    private const LIST_FIELDS_ENDPOINT = '/api/collections/%s/fields';
 
     public function setUp(): void
     {
@@ -28,9 +28,9 @@ class ListFieldTest extends TestCase
     public function testListFields(): void {
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
-        $createdFields = $this->boringTestService->storeTestField([], $requestCollection->name, $requestUser->id);
+        $createdFields = $this->boringTestService->storeManyTestFields(3, $requestCollection->name, $requestUser->id);
 
-        $requestUrl = sprintf(self::SHOW_FIELD_ENDPOINT, $requestCollection->name);
+        $requestUrl = sprintf(self::LIST_FIELDS_ENDPOINT, $requestCollection->name);
 
         $response = $this->actingAs($requestUser)->getJson($requestUrl);
 
@@ -65,7 +65,7 @@ class ListFieldTest extends TestCase
 
         $field = current($fieldsResponse);
 
-        $this->assertCount($createdFields->count(), $fieldsResponse);
+        $this->assertCount($createdFields->count() + 3, $fieldsResponse); // 3 default fields
         $this->assertNotEmpty($field['name']);
         $this->assertNotEmpty($field['uuid']);
         $this->assertNull($field['validation']);
@@ -76,7 +76,7 @@ class ListFieldTest extends TestCase
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
 
-        $requestUrl = sprintf(self::SHOW_FIELD_ENDPOINT, $requestCollection->name);
+        $requestUrl = sprintf(self::LIST_FIELDS_ENDPOINT, $requestCollection->name);
 
         $this->getJson($requestUrl)->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
