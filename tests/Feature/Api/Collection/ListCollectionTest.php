@@ -26,9 +26,7 @@ class ListCollectionTest extends TestCase
         $requestUser = BoringUser::factory()->createOne();
         $createdCollections = $this->boringTestService->storeManyTestCollections(3, $requestUser->id);
 
-        $requestUrl = sprintf(self::LIST_COLLECTIONS_ENDPOINT);
-
-        $response = $this->actingAs($requestUser)->getJson($requestUrl);
+        $response = $this->actingAs($requestUser)->getJson(self::LIST_COLLECTIONS_ENDPOINT);
 
         $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([

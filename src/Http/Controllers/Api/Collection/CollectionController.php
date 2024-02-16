@@ -10,7 +10,6 @@ use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Exceptions\NotFoundException;
 use Sakydev\Boring\Http\Requests\Api\Collection\CreateCollectionRequest;
 use Sakydev\Boring\Resources\Api\CollectionResource;
-use Sakydev\Boring\Resources\Api\FieldResource;
 use Sakydev\Boring\Resources\Api\Responses\BadRequestErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\ExceptionErrorResponse;
 use Sakydev\Boring\Resources\Api\Responses\NotFoundErrorResponse;
