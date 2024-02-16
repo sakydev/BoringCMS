@@ -34,7 +34,7 @@ class FormController extends Controller
 
             $forms = $this->formService->list($page, $limit);
 
-            return new SuccessResponse('item.success.findMany', [
+            return new SuccessResponse('item.success.form.findMany', [
                 'forms' => FormResource::collection($forms),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
@@ -48,7 +48,7 @@ class FormController extends Controller
         try {
             $form = $this->formService->getBySlug($slug);
 
-            return new SuccessResponse('item.success.findOne', [
+            return new SuccessResponse('item.success.form.findOne', [
                 'form' => new FormResource($form),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
@@ -64,7 +64,7 @@ class FormController extends Controller
         try {
             $form = $this->formService->store($createRequest->validated(), Auth::id());
 
-            return new SuccessResponse('item.success.createOne', [
+            return new SuccessResponse('item.success.form.createOne', [
                 'form' => new FormResource($form),
             ], Response::HTTP_CREATED);
         } catch (Throwable $throwable) {
@@ -82,7 +82,7 @@ class FormController extends Controller
 
             $form = $this->formService->update($updatedFields, $slug, $userId);
 
-            return new SuccessResponse('item.success.updateOne', [
+            return new SuccessResponse('item.success.form.updateOne', [
                 'form' => new FormResource($form),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
@@ -99,7 +99,7 @@ class FormController extends Controller
         try {
             $this->formService->destroyBySlug($slug);
 
-            return new SuccessResponse('item.success.destroyOne', [], Response::HTTP_NO_CONTENT);
+            return new SuccessResponse('item.success.form.destroyOne', [], Response::HTTP_NO_CONTENT);
         } catch (NotFoundException $exception) {
             return new NotFoundErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {

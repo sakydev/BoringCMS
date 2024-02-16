@@ -37,7 +37,7 @@ class FieldController
 
             $fields = $this->fieldService->list($page, $limit);
 
-            return new SuccessResponse('item.success.findMany', [
+            return new SuccessResponse('item.success.field.field.findMany', [
                 'fields' => FieldResource::collection($fields),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
@@ -51,7 +51,7 @@ class FieldController
         try {
             $field = $this->fieldService->getByUUID($request->route('fieldUUID'));
 
-            return new SuccessResponse('item.success.findOne', [
+            return new SuccessResponse('item.success.field.findOne', [
                 'field' => new FieldResource($field),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
@@ -70,7 +70,7 @@ class FieldController
             $userId = Auth::id();
             $field = $this->collectionFieldService->storeField($createRequest->validated(), $collectionName, $userId);
 
-            return new SuccessResponse('item.success.createOne', [
+            return new SuccessResponse('item.success.field.createOne', [
                 'field' => new FieldResource($field),
             ], Response::HTTP_CREATED);
         } catch (BadRequestException $exception) {
@@ -89,7 +89,7 @@ class FieldController
 
             $field = $this->fieldService->update($updatedFields, $updateRequest->route('fieldUUID'), $userId);
 
-            return new SuccessResponse('item.success.updateOne', [
+            return new SuccessResponse('item.success.field.updateOne', [
                 'field' => new FieldResource($field),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
@@ -106,7 +106,7 @@ class FieldController
         try {
             $this->collectionFieldService->destroyField($fieldUUID, $collectionName);
 
-            return new SuccessResponse('item.success.destroyOne', [], Response::HTTP_NO_CONTENT);
+            return new SuccessResponse('item.success.field.destroyOne', [], Response::HTTP_NO_CONTENT);
         } catch (BadRequestException $exception) {
             return new BadRequestErrorResponse($exception->getMessage());
         } catch (NotFoundException $exception) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Api\Forms;
+namespace Feature\Api\Form;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Sakydev\Boring\Models\BoringUser;
@@ -47,6 +47,8 @@ class CreateFormTest extends TestCase
 
         $responseContent = $response->json();
         $formResponse = $responseContent['content']['form'];
+
+        $this->assertEquals(phrase('item.success.form.createOne'), $responseContent['message']);
 
         $this->assertEquals($requestUser->id, $formResponse['created_by']);
         $this->assertEquals($requestContent['name'], $formResponse['name']);

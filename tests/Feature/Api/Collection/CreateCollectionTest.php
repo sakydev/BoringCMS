@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Api\Forms;
+namespace Feature\Api\Collection;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
@@ -54,6 +54,8 @@ class CreateCollectionTest extends TestCase
 
         $responseContent = $response->json();
         $collectionResponse = $responseContent['content']['collection'];
+
+        $this->assertEquals(phrase('item.success.collection.createOne'), $responseContent['message']);
 
         $this->assertEquals($requestUser->id, $collectionResponse['id']);
         $this->assertFalse($collectionResponse['is_hidden']);

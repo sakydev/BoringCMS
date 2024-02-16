@@ -47,6 +47,8 @@ class ListFormTest extends TestCase
         $responseContent = $response->json();
         $responseForms = $responseContent['content']['forms'];
 
+        $this->assertEquals(phrase('item.success.form.findMany'), $responseContent['message']);
+
         foreach ($createdForms as $index => $createdForm) {
             $this->assertEquals($createdForm->id, $responseForms[$index]['id']);
             $this->assertEquals($createdForm->name, $responseForms[$index]['name']);

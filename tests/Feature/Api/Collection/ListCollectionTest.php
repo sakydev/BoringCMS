@@ -52,6 +52,8 @@ class ListCollectionTest extends TestCase
         $responseContent = $response->json();
         $collectionsResposne = $responseContent['content']['collections'];
 
+        $this->assertEquals(phrase('item.success.collection.findMany'), $responseContent['message']);
+
         $collection = current($collectionsResposne);
 
         $this->assertCount($createdCollections->count(), $collectionsResposne);

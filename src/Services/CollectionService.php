@@ -16,7 +16,7 @@ class CollectionService
     public function getByName(string $name): ?Collection {
         $collection = $this->collectionRepository->getByName($name);
         if (!$collection) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.collection.notFound');
         }
 
         return $collection;

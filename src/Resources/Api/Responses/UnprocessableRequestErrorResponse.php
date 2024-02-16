@@ -5,16 +5,17 @@ namespace Sakydev\Boring\Resources\Api\Responses;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class UnprocessableRequestErrorResponse extends JsonResponse
+class UnprocessableRequestErrorResponse extends ErrorResponse
 {
-    public function __construct(array|string $error, array $headers = [], int $options = 0)
+    public function __construct(array|string $error, array $replace = [], $headers = [], int $options = 0)
     {
         parent::__construct(
             [
                 'status' => 'error',
-                'errors' => is_array($error) ? $error : [phrase($error)],
+                $error,
             ],
             Response::HTTP_UNPROCESSABLE_ENTITY,
+            $replace,
             $headers,
             $options,
         );

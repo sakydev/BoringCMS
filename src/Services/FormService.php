@@ -21,7 +21,7 @@ class FormService
     public function getBySlug(string $slug): Form {
         $form = $this->formRepository->getBySlug($slug);
         if (!$form) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.form.notFound');
         }
 
         return $form;
@@ -37,7 +37,7 @@ class FormService
     public function update(array $updatedContent, string $slug, int $userId): Form {
         $form = $this->formRepository->getBySlug($slug);
         if (!$form) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.form.notFound');
         }
 
         return $this->formRepository->update($form, $updatedContent, $userId);
@@ -48,7 +48,7 @@ class FormService
      */
     public function destroyBySlug(string $slug): bool {
         if (!$this->formRepository->existsBySlug($slug)) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.form.notFound');
         }
 
         return $this->formRepository->destroyBySlug($slug);

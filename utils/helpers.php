@@ -10,14 +10,14 @@ function boringPath(string $path): string {
     return sprintf('%s/%s', $packagePath, $path);
 }
 
-function phrase($key, $replace = [], $locale = null): string
+function phrase(array|string $key, array $replace = [], $locale = null): string
 {
     if (!strpos($key, '.')) {
         return $key;
     }
 
     $keys = explode('.', $key);
-    $translation = trans(array_shift($keys), $replace, $locale);
+    $translation = trans(array_shift($keys), [], $locale);
 
     foreach ($keys as $segment) {
         if (!is_array($translation) || !array_key_exists($segment, $translation)) {
@@ -27,5 +27,11 @@ function phrase($key, $replace = [], $locale = null): string
         $translation = $translation[$segment];
     }
 
-    return $translation;
+    foreach ($replace as $name => $value) {
+        if (strstr($translation, ":{$name}")) {
+            $translation = str_replace(":{$name}", $value, $translation);
+        }
+    }
+
+    return trim($translation);
 }

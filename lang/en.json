@@ -11,34 +11,142 @@
     },
     "general": {
         "error": {
-            "unknown": "Something went wrong"
+            "unknown": "Something went wrong trying to process request",
+            "unknownWithAction": "Something went wrong trying to process request [action: :action]"
         }
     },
     "item": {
         "error": {
-            "alreadyPublished": "Item already published",
-            "alreadyUnpublished": "Item is already unpublished",
-            "alreadyExists": "Item duplicate exists",
-            "invalidAccessPermissions": "User has insufficient permissions to access item",
-            "invalidCreatePermissions": "User has insufficient permissions to create item",
-            "invalidUpdatePermissions": "User has insufficient permissions to update item",
-            "invalidValue": "User provided invalid item value",
-            "invalidUUID": "User provided invalid item UUID",
-            "notFound": "Item not found"
+            "generic": {
+                "alreadyPublished": ":item already published",
+                "alreadyUnpublished": ":item is already unpublished",
+                "alreadyExists": ":item duplicate exists",
+                "invalidAccessPermissions": "User has insufficient permissions to access :item",
+                "invalidCreatePermissions": "User has insufficient permissions to create :item",
+                "invalidUpdatePermissions": "User has insufficient permissions to update :item",
+                "invalidValue": "User provided invalid item value",
+                "invalidUUID": "User provided invalid item UUID",
+                "notFound": "Item not found"
+            },
+            "collection": {
+                "notFound": "Collection not found",
+                "invalidAccessPermissions": "User has insufficient permissions to access collection",
+                "invalidCreatePermissions": "User has insufficient permissions to create collection",
+                "invalidUpdatePermissions": "User has insufficient permissions to update collection"
+            },
+            "collectionEntry": {
+                "notFound": "Collection entry not found",
+                "invalidUUID": "User provided invalid collection entry UUID"
+            },
+            "field": {
+                "notFound": "Field not found",
+                "invalidUUID": "User provided invalid field UUID"
+            },
+            "form": {
+                "notFound": "Form not found",
+                "invalidUUID": "User provided invalid form UUID"
+            },
+            "formResponse": {
+                "notFound": "Form response not found",
+                "invalidUUID": "User provided invalid form response UUID"
+            },
+            "user": {
+                "notFound": "User not found"
+            }
         },
         "success": {
-            "createMany": "Items created successfully",
-            "createSingle": "Item created successfully",
-            "destroyMany": "Items deleted successfully",
-            "destroySingle": "Item deleted successfully",
-            "findMany": "Items fetched successfully",
-            "findOne": "Item fetched successfully",
-            "publishMany": "Items published successfully",
-            "publishSingle": "Item published successfully",
-            "unpublishMany": "Items unpublished successfully",
-            "unpublishSingle": "Items unpublished successfully",
-            "updateMany": "Items updated successfully",
-            "updateSingle": "Item updated successfully"
+            "generic": {
+                "createOne": "Item created successfully",
+                "createMany": "Items created successfully",
+                "destroyOne": "Item deleted successfully",
+                "destroyMany": "Items deleted successfully",
+                "findMany": "Items fetched successfully",
+                "findOne": "Item fetched successfully",
+                "publishMany": "Items published successfully",
+                "publishOne": "Item published successfully",
+                "unpublishMany": "Items unpublished successfully",
+                "unpublishOne": "Item unpublished successfully",
+                "updateMany": "Items updated successfully",
+                "updateOne": "Item updated successfully"
+            },
+            "collection": {
+                "findOne": "Collection fetched successfully",
+                "findMany": "Collections fetched successfully",
+                "createOne": "Collection created successfully",
+                "createMany": "Collections created successfully",
+                "destroyOne": "Collection deleted successfully",
+                "destroyMany": "Collections deleted successfully",
+                "updateOne": "Collection updated successfully",
+                "updateMany": "Collections updated successfully",
+                "publishOne": "Collection published successfully",
+                "publishMany": "Collections published successfully",
+                "unpublishOne": "Collection unpublished successfully",
+                "unpublishMany": "Collections unpublished successfully"
+            },
+            "collectionEntry": {
+                "findOne": "Collection entry fetched successfully",
+                "findMany": "Collection entries fetched successfully",
+                "createOne": "Collection entry created successfully",
+                "createMany": "Collection entries created successfully",
+                "destroyOne": "Collection entry deleted successfully",
+                "destroyMany": "Collection entries deleted successfully",
+                "updateOne": "Collection entry updated successfully",
+                "updateMany": "Collection entries updated successfully",
+                "publishOne": "Collection entry published successfully",
+                "publishMany": "Collection entries published successfully",
+                "unpublishOne": "Collection entry unpublished successfully",
+                "unpublishMany": "Collection entries unpublished successfully"
+            },
+            "field": {
+                "findOne": "Field fetched successfully",
+                "findMany": "Fields fetched successfully",
+                "createOne": "Field created successfully",
+                "createMany": "Fields created successfully",
+                "destroyOne": "Field deleted successfully",
+                "destroyMany": "Fields deleted successfully",
+                "updateOne": "Field updated successfully",
+                "updateMany": "Fields updated successfully"
+            },
+            "form": {
+                "findOne": "Form fetched successfully",
+                "findMany": "Forms fetched successfully",
+                "createOne": "Form created successfully",
+                "createMany": "Forms created successfully",
+                "destroyOne": "Form deleted successfully",
+                "destroyMany": "Forms deleted successfully",
+                "updateOne": "Form updated successfully",
+                "updateMany": "Forms updated successfully",
+                "publishOne": "Form published successfully",
+                "publishMany": "Forms published successfully",
+                "unpublishOne": "Form unpublished successfully",
+                "unpublishMany": "Forms unpublished successfully"
+            },
+            "formResponse": {
+                "findOne": "Form response fetched successfully",
+                "findMany": "Form responses fetched successfully",
+                "createOne": "Form response created successfully",
+                "createMany": "Form responses created successfully",
+                "destroyOne": "Form response deleted successfully",
+                "destroyMany": "Form responses deleted successfully",
+                "updateOne": "Form response updated successfully",
+                "updateMany": "Form responses updated successfully",
+                "publishOne": "Form response published successfully",
+                "publishMany": "Form responses published successfully",
+                "unpublishOne": "Form response unpublished successfully",
+                "unpublishMany": "Form responses unpublished successfully"
+            },
+            "user": {
+                "findOne": "User fetched successfully",
+                "createOne": "User created successfully",
+                "destroyOne": "User deleted successfully",
+                "destroyMany": "Users deleted successfully",
+                "updateOne": "User updated successfully",
+                "updateMany": "Users updated successfully",
+                "publishOne": "User activated successfully",
+                "publishMany": "Users activated successfully",
+                "unpublishOne": "User deactivated successfully",
+                "unpublishMany": "Users deactivated successfully"
+            }
         }
     }
 }

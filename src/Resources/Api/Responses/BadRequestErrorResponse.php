@@ -7,12 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BadRequestErrorResponse extends JsonResponse
 {
-    public function __construct(array|string $error, array $headers = [], int $options = 0)
+    public function __construct(array|string $error, array $replace  = [], array $headers = [], int $options = 0)
     {
         parent::__construct(
             [
                 'status' => 'error',
-                'errors' => is_array($error) ? $error : [phrase($error)],
+                'errors' => $error,
             ],
             Response::HTTP_BAD_REQUEST,
             $headers,

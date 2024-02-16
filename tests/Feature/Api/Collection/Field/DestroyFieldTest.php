@@ -61,9 +61,11 @@ class DestroyFieldTest extends TestCase
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
         $requestUrl = sprintf(self::DESTROY_FIELD_ENDPOINT, $requestCollection->name, $fakeUUID);
 
-        $this->actingAs($requestUser)
-            ->deleteJson($requestUrl)
-            ->assertStatus(Response::HTTP_NOT_FOUND);
+        $response = $this->actingAs($requestUser)->deleteJson($requestUrl);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+        $responseContent = $response->json();
+        $this->assertEquals(phrase('item.error.field.notFound'), $responseContent['errors']);
     }
 
     public function testTryDestroyFieldInvalidUUID(): void {
@@ -71,8 +73,10 @@ class DestroyFieldTest extends TestCase
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
         $requestUrl = sprintf(self::DESTROY_FIELD_ENDPOINT, $requestCollection->name, 'invalid-uuid');
 
-        $this->actingAs($requestUser)
-            ->deleteJson($requestUrl)
-            ->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response = $this->actingAs($requestUser)->deleteJson($requestUrl);
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+
+        $responseContent = $response->json();
+        $this->assertEquals(phrase('item.error.field.invalidUUID'), $responseContent['errors']);
     }
 }

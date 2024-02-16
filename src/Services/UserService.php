@@ -40,7 +40,7 @@ class UserService
     public function getById(int $userId): BoringUser {
         $user = $this->userRepository->getById($userId);
         if (!$user->id) {
-            throw new NotFoundException('item.error.notFound');
+            throw new NotFoundException('item.error.form.notFound');
         }
 
         return $user;

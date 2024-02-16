@@ -3,10 +3,7 @@
 namespace Feature\Api\Collection;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
-use Sakydev\Boring\Models\Field;
 use Sakydev\Boring\Services\BoringTestService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -53,6 +50,8 @@ class ShowCollectionTest extends TestCase
         $responseContent = $response->json();
         $collectionResponse = $responseContent['content']['collection'];
 
+        $this->assertEquals(phrase('item.success.collection.findOne'), $responseContent['message']);
+
         $this->assertEquals($requestCollection->name, $collectionResponse['name']);
         $this->assertEquals($requestUser->id, $collectionResponse['created_by']);
     }
@@ -61,8 +60,11 @@ class ShowCollectionTest extends TestCase
         $requestUser = BoringUser::factory()->createOne();
         $requestUrl = sprintf(self::SHOW_COLLECTION_ENDPOINT, 'invalid');
 
-        $this->actingAs($requestUser)
-            ->getJson($requestUrl)->assertStatus(Response::HTTP_NOT_FOUND);
+        $response = $this->actingAs($requestUser)->getJson($requestUrl);
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+        $responseContent = $response->json();
+        $this->assertEquals(phrase('item.error.collection.notFound'), $responseContent['errors']);
     }
 
     public function testTryShowCollectionWithoutAuthentication(): void {
