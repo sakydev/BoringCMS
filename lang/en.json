@@ -11,34 +11,35 @@
     },
     "general": {
         "error": {
-            "unknown": "Something went wrong"
+            "unknown": "Something went wrong trying to process request",
+            "unknownWithAction": "Something went wrong trying to process request [action: :action]"
         }
     },
     "item": {
         "error": {
-            "alreadyPublished": "Item already published",
-            "alreadyUnpublished": "Item is already unpublished",
-            "alreadyExists": "Item duplicate exists",
-            "invalidAccessPermissions": "User has insufficient permissions to access item",
-            "invalidCreatePermissions": "User has insufficient permissions to create item",
-            "invalidUpdatePermissions": "User has insufficient permissions to update item",
+            "alreadyPublished": ":item already published",
+            "alreadyUnpublished": ":item is already unpublished",
+            "alreadyExists": ":item duplicate exists",
+            "invalidAccessPermissions": "User has insufficient permissions to access :item",
+            "invalidCreatePermissions": "User has insufficient permissions to create :item",
+            "invalidUpdatePermissions": "User has insufficient permissions to update :item",
             "invalidValue": "User provided invalid item value",
             "invalidUUID": "User provided invalid item UUID",
             "notFound": "Item not found"
         },
         "success": {
+            "createOne": ":item created successfully",
             "createMany": "Items created successfully",
-            "createSingle": "Item created successfully",
+            "destroyOne": ":item deleted successfully",
             "destroyMany": "Items deleted successfully",
-            "destroySingle": "Item deleted successfully",
             "findMany": "Items fetched successfully",
-            "findOne": "Item fetched successfully",
+            "findOne": ":item fetched successfully",
             "publishMany": "Items published successfully",
-            "publishSingle": "Item published successfully",
+            "publishOne": ":item published successfully",
             "unpublishMany": "Items unpublished successfully",
-            "unpublishSingle": "Items unpublished successfully",
+            "unpublishOne": ":item unpublished successfully",
             "updateMany": "Items updated successfully",
-            "updateSingle": "Item updated successfully"
+            "updateOne": ":item updated successfully"
         }
     }
 }

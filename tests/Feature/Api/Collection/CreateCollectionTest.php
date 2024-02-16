@@ -55,6 +55,8 @@ class CreateCollectionTest extends TestCase
         $responseContent = $response->json();
         $collectionResponse = $responseContent['content']['collection'];
 
+        $this->assertEquals($responseContent['message'], phrase('item.success.createOne'));
+
         $this->assertEquals($requestUser->id, $collectionResponse['id']);
         $this->assertFalse($collectionResponse['is_hidden']);
         $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $collectionResponse['name']);
