@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Api\Forms;
+namespace Feature\Api\Form;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Sakydev\Boring\Models\BoringUser;
@@ -41,6 +41,8 @@ class ShowFormTest extends TestCase
         $responseContent = $response->json();
         $responseForm = $responseContent['content']['form'];
 
+        $this->assertEquals(phrase('item.success.form.findOne'), $responseContent['message']);
+
         $this->assertEquals($created->id, $responseForm['id']);
         $this->assertEquals($created->name, $responseForm['name']);
         $this->assertEquals($created->slug, $responseForm['slug']);
@@ -61,8 +63,11 @@ class ShowFormTest extends TestCase
 
         $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, $created->id);
         $response = $this->actingAs($requestUser)->getJson($requestUrl);
-
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+        $responseContent = $response->json();
+
+        $this->assertEquals(phrase('item.error.form.notFound'), $responseContent['errors']);
     }
 
     public function testTryShowFormWithInvalidSlug(): void {
@@ -70,7 +75,9 @@ class ShowFormTest extends TestCase
         $requestUrl = sprintf(self::SHOW_FORM_ENDPOINT, 'invalid-slug');
 
         $response = $this->actingAs($requestUser)->getJson($requestUrl);
-
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+        $responseContent = $response->json();
+        $this->assertEquals(phrase('item.error.form.notFound'), $responseContent['errors']);
     }
 }

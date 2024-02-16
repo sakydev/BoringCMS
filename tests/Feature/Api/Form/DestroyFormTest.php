@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Api\Forms;
+namespace Feature\Api\Form;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Sakydev\Boring\Models\BoringUser;
@@ -45,7 +45,9 @@ class DestroyFormTest extends TestCase
 
         $requestUrl = sprintf(self::DELETE_FORM_ENDPOINT, 'non-existing-slug');
         $response = $this->actingAs($requestUser)->deleteJson($requestUrl);
-
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+        $responseContent = $response->json();
+        $this->assertEquals(phrase('item.error.form.notFound'), $responseContent['errors']);
     }
 }
