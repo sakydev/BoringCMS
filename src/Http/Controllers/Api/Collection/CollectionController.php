@@ -38,7 +38,7 @@ class CollectionController
             $fields = $this->collectionService->list($page, $limit);
 
             return new SuccessResponse('item.success.findMany', [
-                'collections' => FieldResource::collection($fields),
+                'collections' => CollectionResource::collection($fields),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
             Log::error('List collections failed', ['error' => $throwable->getMessage()]);

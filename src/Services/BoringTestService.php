@@ -40,6 +40,16 @@ class BoringTestService
         return $this->collectionFieldService->storeField($content, $collectionName, $userId);
     }
 
+    public function storeManyTestCollections(int $count, ?int $userId) {
+        $response = collect();
+        for ($i = 0; $i < $count; $i++) {
+            $created = $this->storeTestCollection([], $userId);
+            $response->push($created);
+        }
+
+        return $response;
+    }
+
     public function storeManyTestFields(int $count, string $collectionName, ?int $userId) {
         $response = collect();
         for ($i = 0; $i < $count; $i++) {
