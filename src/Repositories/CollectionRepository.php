@@ -2,6 +2,7 @@
 
 namespace Sakydev\Boring\Repositories;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Sakydev\Boring\Models\Collection;
 
 class CollectionRepository
@@ -9,6 +10,14 @@ class CollectionRepository
     public function getByName(string $name): ?Collection {
         return (new Collection())->where('name', $name)->first();
     }
+
+    public function list(int $page, int $limit): LengthAwarePaginator
+    {
+        return (new Collection())
+            ->orderBy('id', 'asc')
+            ->paginate($limit, ['*'], 'page', $page);
+    }
+
     public function store(array $content, int $userId): Collection {
         $collection = new Collection();
 
