@@ -53,6 +53,8 @@ class ShowCollectionTest extends TestCase
         $responseContent = $response->json();
         $collectionResponse = $responseContent['content']['collection'];
 
+        $this->assertEquals(phrase('item.success.collection.findOne'), $responseContent['message']);
+
         $this->assertEquals($requestCollection->name, $collectionResponse['name']);
         $this->assertEquals($requestUser->id, $collectionResponse['created_by']);
     }

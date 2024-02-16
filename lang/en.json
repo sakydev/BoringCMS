@@ -32,7 +32,7 @@
                 "notFound": "Collection not found",
                 "invalidAccessPermissions": "User has insufficient permissions to access collection",
                 "invalidCreatePermissions": "User has insufficient permissions to create collection",
-                "invalidUpdatePermissions": "User has insufficient permissions to update collection",
+                "invalidUpdatePermissions": "User has insufficient permissions to update collection"
             },
             "collectionEntry": {
                 "notFound": "Collection entry not found",
@@ -137,9 +137,7 @@
             },
             "user": {
                 "findOne": "User fetched successfully",
-                "findMany": "Users fetched successfully",
                 "createOne": "User created successfully",
-                "createMany": "Users created successfully",
                 "destroyOne": "User deleted successfully",
                 "destroyMany": "Users deleted successfully",
                 "updateOne": "User updated successfully",

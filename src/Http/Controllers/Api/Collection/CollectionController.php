@@ -36,7 +36,7 @@ class CollectionController
 
             $fields = $this->collectionService->list($page, $limit);
 
-            return new SuccessResponse('item.success.findMany', [
+            return new SuccessResponse('item.success.collection.findMany', [
                 'collections' => CollectionResource::collection($fields),
             ], Response::HTTP_OK);
         } catch (Throwable $throwable) {
@@ -50,7 +50,7 @@ class CollectionController
         try {
             $collection = $this->collectionService->getByName($name);
 
-            return new SuccessResponse('item.success.findOne', [
+            return new SuccessResponse('item.success.collection.findOne', [
                 'collection' => new CollectionResource($collection),
             ], Response::HTTP_OK);
         } catch (NotFoundException $exception) {
@@ -67,7 +67,7 @@ class CollectionController
             $collection = $this->collectionFieldService
                 ->storeCollection($createRequest->validated(), Auth::id());
 
-            return new SuccessResponse('item.success.createOne', [
+            return new SuccessResponse('item.success.collection.createOne', [
                 'collection' => new CollectionResource($collection),
             ], Response::HTTP_CREATED);
         } catch (BadRequestException $exception) {
