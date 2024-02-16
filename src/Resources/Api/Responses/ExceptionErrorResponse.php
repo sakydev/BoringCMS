@@ -6,10 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionErrorResponse extends ErrorResponse
 {
-    public function __construct(array|string $error, array $headers = [], int $options = 0) {
+    public function __construct(array|string $error, array $replace = [], array $headers = [], int $options = 0) {
         parent::__construct(
-            is_array($error) ? $error : phrase($error),
+            $error,
             Response::HTTP_INTERNAL_SERVER_ERROR,
+            $replace,
             $headers,
             $options,
         );
