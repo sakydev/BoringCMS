@@ -78,4 +78,19 @@ class CollectionController
             return new ExceptionErrorResponse('general.error.unknown');
         }
     }
+
+    public function destroy(string $collectionName): JsonResponse
+    {
+        try {
+            $this->collectionFieldService->destroyCollection($collectionName);
+
+            return new SuccessResponse('item.success.collection.destroyOne', [], Response::HTTP_NO_CONTENT);
+        } catch (NotFoundException $exception) {
+            return new NotFoundErrorResponse($exception->getMessage());
+        } catch (Throwable $throwable) {
+            Log::error('Delete collection failed', ['error' => $throwable->getMessage()]);
+
+            return new ExceptionErrorResponse('general.error.unknown');
+        }
+    }
 }
