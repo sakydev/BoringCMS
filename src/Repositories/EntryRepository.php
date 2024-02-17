@@ -3,23 +3,23 @@
 namespace Sakydev\Boring\Repositories;
 
 use Illuminate\Pagination\LengthAwarePaginator;
-use Sakydev\Boring\Models\Collection;
+use Sakydev\Boring\Models\Entry;
 
 class EntryRepository
 {
-    public function getByName(string $name): ?Collection {
-        return (new Collection())->where('name', $name)->first();
+    public function getByUUID(string $uuid): ?Entry {
+        return (new Entry())->where('uuid', $uuid)->first();
     }
 
     public function list(int $page, int $limit): LengthAwarePaginator
     {
-        return (new Collection())
+        return (new Entry())
             ->orderBy('id', 'asc')
             ->paginate($limit, ['*'], 'page', $page);
     }
 
-    public function store(array $content, int $userId): Collection {
-        $collection = new Collection();
+    public function store(array $content, int $userId): Entry {
+        $collection = new Entry();
 
         $collection->fill($content);
         $collection->created_by = $userId;
@@ -30,11 +30,11 @@ class EntryRepository
         return $collection;
     }
 
-    public function destroyByName(string $name): bool {
-        return (new Collection())->where('name', $name)->delete();
+    public function destroyByUUID(string $uuid): bool {
+        return (new Entry())->where('uuid', $uuid)->delete();
     }
 
-    public function destroy(Collection $collection): bool {
-        return $collection->delete();
+    public function destroy(Entry $entry): bool {
+        return $entry->delete();
     }
 }
