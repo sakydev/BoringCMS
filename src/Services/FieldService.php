@@ -45,7 +45,7 @@ class FieldService
     public function store(array $content, int $collectionId): Field {
         $nameExists = $this->fieldRepository->nameExists($content['name'], $collectionId);
         if ($nameExists) {
-            throw new BadRequestException('item.error.alreadyExists');
+            throw new BadRequestException('item.error.field.alreadyExists');
         }
 
         return $this->fieldRepository->store($content, $collectionId);
@@ -57,7 +57,7 @@ class FieldService
     public function storeMany(array $content, int $collectionId): Collection {
         $nameExists = $this->fieldRepository->anyNameExists(array_keys($content), $collectionId);
         if ($nameExists) {
-            throw new BadRequestException('item.error.alreadyExists');
+            throw new BadRequestException('item.error.field.alreadyExists');
         }
 
         return $this->fieldRepository->storeMany($content, $collectionId);
