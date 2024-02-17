@@ -58,6 +58,14 @@ class TableService
     }
 
     private function storeField(Blueprint $table, string $name, array $rules): void {
+        $fieldLength = $rules['validation']['maximumLength'] ?? null;
+        $lengthSupportedTypes = [
+            Field::TYPE_SHORT_TEXT,
+            Field::TYPE_LONG_TEXT,
+            Field::TYPE_MARKDOWN,
+            Field::TYPE_RICHTEXT,
+        ];
+
         switch ($rules['field_type']) {
             case 'primary':
                 $field = $table->id($name);
@@ -91,6 +99,14 @@ class TableService
             $field->nullable();
         } elseif (!empty($rules['default'])) {
             $field->default($rules['default']);
+        }
+
+        if (!empty($rules['validation']['unique'])) {
+            $field->unique();
+        }
+
+        if ($fieldLength && in_array($rules['field_type'], $lengthSupportedTypes)) {
+            $field->length($fieldLength);
         }
     }
 
