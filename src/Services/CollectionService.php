@@ -13,6 +13,10 @@ class CollectionService
         readonly CollectionRepository $collectionRepository,
     ) {}
 
+    public function existsByName(string $name): bool {
+        return $this->collectionRepository->existsByName($name);
+    }
+
     public function getByName(string $name): ?Collection {
         $collection = $this->collectionRepository->getByName($name);
         if (!$collection) {
