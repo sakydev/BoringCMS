@@ -7,31 +7,51 @@ use Sakydev\Boring\Models\Entry;
 
 class EntryRepository
 {
+    private string $table;
+
+    public function setTableName(string $table) {
+        $this->table = $table;
+    }
+
+    public function hasDuplicateEntry(string $fieldName, string $value): bool {
+        return (new Entry())
+            ->setTable($this->table)
+            ->where($fieldName, $value)
+            ->exists();
+    }
+
     public function getByUUID(string $uuid): ?Entry {
-        return (new Entry())->where('uuid', $uuid)->first();
+        return (new Entry())
+            ->setTable($this->table)
+            ->where('uuid', $uuid)
+            ->first();
     }
 
     public function list(int $page, int $limit): LengthAwarePaginator
     {
         return (new Entry())
+            ->setTable($this->table)
             ->orderBy('id', 'asc')
             ->paginate($limit, ['*'], 'page', $page);
     }
 
-    public function store(array $content, int $userId): Entry {
-        $collection = new Entry();
+    public function store(array $content): Entry {
+        $entry = new Entry();
+        $entry->setTable($this->table);
 
-        $collection->fill($content);
-        $collection->created_by = $userId;
+        $entry->fill($content);
 
-        $collection->save();
-        $collection->refresh();
+        $entry->save();
+        $entry->refresh();
 
-        return $collection;
+        return $entry;
     }
 
     public function destroyByUUID(string $uuid): bool {
-        return (new Entry())->where('uuid', $uuid)->delete();
+        return (new Entry())
+            ->setTable($this->table)
+            ->where('uuid', $uuid)
+            ->delete();
     }
 
     public function destroy(Entry $entry): bool {

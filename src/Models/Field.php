@@ -15,8 +15,8 @@ use Sakydev\Boring\Database\Factories\FieldFactory;
  * @property int $collection_id
  * @property string $name
  * @property string $field_type
- * @property string $validation
- * @property string $condition
+ * @property array $validation
+ * @property array $condition
  * @property bool $is_required
  *
  * @property BelongsTo|Collection $collection
