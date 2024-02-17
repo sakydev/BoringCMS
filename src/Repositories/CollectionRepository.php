@@ -29,4 +29,12 @@ class CollectionRepository
 
         return $collection;
     }
+
+    public function destroyByName(string $name): bool {
+        return (new Collection())->where('name', $name)->delete();
+    }
+
+    public function destroy(Collection $collection): bool {
+        return $collection->delete();
+    }
 }

@@ -33,4 +33,12 @@ class CollectionService
     public function update(array $content, int $userId) {
         // This will be called on field creation as well
     }
+
+    public function destroyByName(string $name): bool {
+        return $this->collectionRepository->destroyByName($name);
+    }
+
+    public function destroy(Collection $collection): bool {
+        return $this->collectionRepository->destroyByName($collection);
+    }
 }
