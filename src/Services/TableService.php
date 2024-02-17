@@ -91,7 +91,7 @@ class TableService
                 $field = $table->json($name);
                 break;
             default:
-                // Handle other types as needed
+                $field = $table->string($name);
                 break;
         }
 
