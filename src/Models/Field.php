@@ -13,6 +13,10 @@ class Field extends Model
     use HasFactory;
 
     protected $fillable = ['collection_id', 'name', 'field_type', 'validation', 'condition', 'is_required'];
+    protected $casts = [
+        'validation' => 'json',
+        'condition' => 'json',
+    ];
 
     public const TYPE_SHORT_TEXT = 'short_text';
     public const TYPE_LONG_TEXT = 'long_text';
