@@ -17,12 +17,12 @@ class UpdateFieldRequest extends FormRequest
             'validation' => [
                 'sometimes',
                 'required',
-                'json',
+                'array',
             ],
             'condition' => [
                 'sometimes',
                 'required',
-                'json',
+                'array',
             ],
         ];
     }
