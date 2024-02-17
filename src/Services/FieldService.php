@@ -84,10 +84,6 @@ class FieldService
             throw new BadRequestException('item.error.field.invalidUUID');
         }
 
-        if (!$this->fieldRepository->existsByUUID($uuid)) {
-            throw new NotFoundException('item.error.field.notFound');
-        }
-
         return $this->fieldRepository->destroyByUUID($uuid);
     }
 }

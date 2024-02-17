@@ -17,14 +17,6 @@ class DestroyFieldTest extends TestCase
     private BoringTestService $boringTestService;
     private const DESTROY_FIELD_ENDPOINT = '/api/collections/%s/fields/%s';
 
-    private const VALID_NAME = 'title';
-
-    private const VALID_REQUEST_CONTENT = [
-        'name' => self::VALID_NAME,
-        'field_type' => Field::TYPE_SHORT_TEXT,
-        'is_required' => true
-    ];
-
     public function setUp(): void
     {
         parent::setUp();
@@ -42,6 +34,7 @@ class DestroyFieldTest extends TestCase
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
+        $this->assertDatabaseMissing('fields', ['id' => $requestField->id]);
         $this->assertTrue(Schema::hasTable($requestCollection['name']));
         $this->assertFalse(Schema::hasColumn($requestCollection['name'], $requestField->name));
     }
@@ -55,7 +48,7 @@ class DestroyFieldTest extends TestCase
         $this->deleteJson($requestUrl)->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
-    public function testTryDestroyFieldNonExistingField(): void {
+    public function testTryDestroyNonExistingField(): void {
         $fakeUUID = fake()->uuid();
         $requestUser = BoringUser::factory()->createOne();
         $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);

@@ -35,8 +35,15 @@ class CollectionFieldService
         return $collection;
     }
 
-    public function updateCollection() {}
-    public function destroyCollection() {}
+    public function destroyCollection(string $collectionName): void {
+        $collection = $this->collectionService->getByName($collectionName);
+        if (!$collection) {
+            throw new NotFoundException('item.error.collection.notFound');
+        }
+
+        $this->tableService->dropTable($collectionName);
+        $this->collectionService->destroy($collection);
+    }
 
 
     /**
@@ -54,8 +61,6 @@ class CollectionFieldService
 
         return $field;
     }
-
-    public function updateField() {}
 
     /**
      * @throws NotFoundException

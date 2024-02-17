@@ -94,6 +94,10 @@ class TableService
         }
     }
 
+    public function dropTable(string $name): void {
+        Schema::dropIfExists($name);
+    }
+
     public function dropColumn(string $name, string $column): void {
         Schema::dropColumns($name, $column);
     }
