@@ -39,6 +39,6 @@ class CollectionService
     }
 
     public function destroy(Collection $collection): bool {
-        return $this->collectionRepository->destroyByName($collection);
+        return $this->collectionRepository->destroy($collection);
     }
 }
