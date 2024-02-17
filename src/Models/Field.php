@@ -2,12 +2,27 @@
 
 namespace Sakydev\Boring\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Sakydev\Boring\Database\Factories\FieldFactory;
 
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property int $collection_id
+ * @property string $name
+ * @property string $field_type
+ * @property string $validation
+ * @property string $condition
+ * @property bool $is_required
+ *
+ * @property BelongsTo|Collection $collection
+ * @property string|Carbon $created_at
+ * @property string|Carbon $updated_at
+*/
 class Field extends Model
 {
     use HasFactory;
