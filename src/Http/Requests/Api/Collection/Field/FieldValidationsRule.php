@@ -17,18 +17,18 @@ class FieldValidationsRule implements ValidationRule
         }
 
         $validator = Validator::make($value, [
-            'required' => 'boolean',
-            'maximumLength' => 'integer',
-            'between' => 'array|size:2',
-            'contains' => 'string',
-            'endsWith' => 'string',
-            'equals' => 'string',
-            'isIn' => 'array',
-            'custom' => 'array',
-            'custom.*.contains' => 'string',
-            'custom.*.endsWith' => 'string',
-            'custom.*.operator' => 'string|in:AND,OR',
-            'custom.*.message' => 'string',
+            'unique' => 'boolean|nullable',
+            'maximumLength' => 'integer|nullable',
+            'between' => 'array|size:2|nullable',
+            'contains' => 'string|nullable',
+            'endsWith' => 'string|nullable',
+            'equals' => 'string|nullable',
+            'isIn' => 'array|nullable',
+            'custom' => 'array|nullable',
+            'custom.*.contains|nullable' => 'string',
+            'custom.*.endsWith|nullable' => 'string',
+            'custom.*.operator|nullable' => 'string|in:AND,OR',
+            'custom.*.message|nullable' => 'string',
         ]);
 
         foreach ($validator->errors()->toArray() as $key => $error) {
