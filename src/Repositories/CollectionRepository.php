@@ -7,6 +7,10 @@ use Sakydev\Boring\Models\Collection;
 
 class CollectionRepository
 {
+    public function existsByName(string $name): bool {
+        return (new Collection())->where('name', $name)->exists();
+    }
+
     public function getByName(string $name): ?Collection {
         return (new Collection())->where('name', $name)->first();
     }
