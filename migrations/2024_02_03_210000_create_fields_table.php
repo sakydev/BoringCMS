@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('field_type');
             $table->json('validation')->nullable();
             $table->json('condition')->nullable();
-            $table->boolean('is_required');
+            $table->boolean('is_required')->default(false);
+            $table->boolean('is_searchable')->default(false);
+            $table->boolean('is_sortable')->default(false);
             $table->timestamps();
 
             $table->unique(['collection_id', 'name']);
