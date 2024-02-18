@@ -62,21 +62,13 @@ class CreateEntryTest extends TestCase
             ]);
 
         $responseContent = $response->json();
-        /*$collectionResponse = $responseContent['content']['collection'];
+        $entryResponse = $responseContent['content']['entry'];
 
-        $this->assertEquals(phrase('item.success.collection.createOne'), $responseContent['message']);
+        $this->assertEquals(phrase('item.success.entry.createOne'), $responseContent['message']);
 
-        $this->assertEquals($requestUser->id, $collectionResponse['id']);
-        $this->assertFalse($collectionResponse['is_hidden']);
-        $this->assertEquals(self::VALID_REQUEST_CONTENT['name'], $collectionResponse['name']);
+        $this->assertEquals(self::VALID_ENTRY_FIELD_VALUE, $entryResponse[$requestField->name]);
 
-        // check default created table
-        $this->assertTrue(Schema::hasTable($collectionResponse['name']));
-        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'id'));
-        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'created_at'));
-        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'updated_at'));*/
-
-        // check fields have been populated
+        // check table has row
         $this->assertDatabaseCount($requestCollection->name, 1);
     }
 
