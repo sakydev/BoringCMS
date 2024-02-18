@@ -74,7 +74,6 @@ class CreateEntryTest extends TestCase
 
     // with required validation
     // with unique validation
-    // without authentication
     // without collection
 
     /*public function testTryCreateFieldWithDuplicateValues(): void {
@@ -91,6 +90,15 @@ class CreateEntryTest extends TestCase
                 'errors',
             ]);
     }*/
+
+    public function testTryCreateEntryWithoutCollection(): void {
+        $requestUser = BoringUser::factory()->createOne();
+        $requestUrl = sprintf(self::CREATE_ENTRY_ENDPOINT, 'invalid');
+
+        $this->actingAs($requestUser)
+            ->postJson($requestUrl, ['test' => 'test'])
+            ->assertStatus(Response::HTTP_NOT_FOUND);
+    }
 
     public function testTryCreateEntryWithoutAuthentication(): void {
         $requestCollection = $this->boringTestService->storeTestCollection([], null);

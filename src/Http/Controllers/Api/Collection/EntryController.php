@@ -35,7 +35,6 @@ class EntryController
         } catch (BadRequestException $exception) {
             return new BadRequestErrorResponse($exception->getMessage());
         } catch (Throwable $throwable) {
-            dd($throwable);
             Log::error('Create entry failed', ['error' => $throwable->getMessage()]);
 
             return new ExceptionErrorResponse('general.error.unknown');
