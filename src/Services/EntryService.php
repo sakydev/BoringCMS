@@ -4,6 +4,7 @@ namespace Sakydev\Boring\Services;
 
 use Sakydev\Boring\Exceptions\BadRequestException;
 use Sakydev\Boring\Exceptions\NotFoundException;
+use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Models\Entry;
 use Sakydev\Boring\Models\Field;
 use Sakydev\Boring\Repositories\EntryRepository;
@@ -30,6 +31,12 @@ class EntryService
             throw new NotFoundException('item.error.collection.notFound');
         }
 
+        // TODO: implement actual user
+        $canCreate = $this->canCreate($collectionDetails, 0);
+        if (!empty($canCreate) && $canCreate !== true) {
+            throw new BadRequestException($canCreate);
+        }
+
         // dynamically set entry table name
         $this->entryRepository->setTableName($collectionName);
 
@@ -46,6 +53,14 @@ class EntryService
         }
 
         return $this->entryRepository->store($content);
+    }
+
+    public function canCreate(Collection $collection, int $userId): bool {
+        if ($collection->is_readonly) {
+            return phrase('item.error.collection.readOnly');
+        }
+
+        return true;
     }
 
     private function validateContent(?string $content, Field $field): ?string {

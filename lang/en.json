@@ -32,7 +32,8 @@
                 "notFound": "Collection not found",
                 "invalidAccessPermissions": "User has insufficient permissions to access collection",
                 "invalidCreatePermissions": "User has insufficient permissions to create collection",
-                "invalidUpdatePermissions": "User has insufficient permissions to update collection"
+                "invalidUpdatePermissions": "User has insufficient permissions to update collection",
+                "readOnly": "Collection is read only"
             },
             "collectionEntry": {
                 "notFound": "Collection entry not found",

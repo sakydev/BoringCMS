@@ -14,6 +14,8 @@ use Sakydev\Boring\Database\Factories\CollectionFactory;
  * @property string $name
  * @property string $description
  * @property bool $is_hidden
+ * @property bool $is_readonly
+ * @property bool $is_versioned
  * @property int $created_by
  * @property int $updated_by
  *
