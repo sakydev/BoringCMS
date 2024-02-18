@@ -1,12 +1,14 @@
 <?php
 
-namespace Feature\Api\Collection;
+namespace Feature\Api\Collection\Entry;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
 use Sakydev\Boring\Models\Collection;
+use Sakydev\Boring\Models\Field;
+use Sakydev\Boring\Services\BoringTestService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\CreatesApplication;
 use Tests\TestCase;
@@ -16,44 +18,51 @@ class CreateEntryTest extends TestCase
     use CreatesApplication;
     use RefreshDatabase;
 
-    private const CREATE_COLLECTION_ENDPOINT = '/api/collections';
-
-    private const VALID_NAME = 'posts';
-
-    private const VALID_DESCRIPTION = 'Hello';
-
-    private const VALID_REQUEST_CONTENT = [
-        'name' => self::VALID_NAME,
-        'description' => self::VALID_DESCRIPTION,
-        'is_required' => true
+    private BoringTestService $boringTestService;
+    private const CREATE_ENTRY_ENDPOINT = '/api/collections/%s/entries';
+    private const VALID_ENTRY_FIELD_VALUE = 'Sample';
+    private const VALID_FIELD_CONTENT = [
+        'name' => 'title',
+        'field_type' => Field::TYPE_SHORT_TEXT,
+        'is_required' => true,
     ];
 
-    public function testCreateCollection(): void {
-        $requestUser = BoringUser::factory()->createOne();
+    public function setUp(): void
+    {
+        parent::setUp();
 
+        $this->boringTestService = $this->app->make(BoringTestService::class);
+    }
+
+    public function testCreateEntryMinimal(): void {
+        $requestUser = BoringUser::factory()->createOne();
+        $requestCollection = $this->boringTestService->storeTestCollection([], $requestUser->id);
+        $requestField = $this->boringTestService->storeTestField(
+            self::VALID_FIELD_CONTENT,
+            $requestCollection->name,
+            $requestUser->id,
+        );
+
+        $requestUrl = sprintf(self::CREATE_ENTRY_ENDPOINT, $requestCollection->name);
         $response = $this->actingAs($requestUser)
-            ->postJson(self::CREATE_COLLECTION_ENDPOINT, self::VALID_REQUEST_CONTENT);
+            ->postJson($requestUrl, [$requestField->name => self::VALID_ENTRY_FIELD_VALUE]);
 
         $response->assertStatus(Response::HTTP_CREATED)
             ->assertJsonStructure([
                 'status',
                 'message',
                 'content' => [
-                    'collection' => [
+                    'entry' => [
                         'id',
-                        'name',
-                        'description',
-                        'is_hidden',
-                        'created_by',
-                        'updated_by',
-                        'created',
-                        'updated',
+                        $requestField->name,
+                        'created_at',
+                        'updated_at',
                     ],
                 ],
             ]);
 
         $responseContent = $response->json();
-        $collectionResponse = $responseContent['content']['collection'];
+        /*$collectionResponse = $responseContent['content']['collection'];
 
         $this->assertEquals(phrase('item.success.collection.createOne'), $responseContent['message']);
 
@@ -65,13 +74,13 @@ class CreateEntryTest extends TestCase
         $this->assertTrue(Schema::hasTable($collectionResponse['name']));
         $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'id'));
         $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'created_at'));
-        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'updated_at'));
+        $this->assertTrue(Schema::hasColumn($collectionResponse['name'], 'updated_at'));*/
 
         // check fields have been populated
-        $this->assertDatabaseCount('fields', 3);
+        $this->assertDatabaseCount($requestCollection->name, 1);
     }
 
-    public function testTryCreateFieldWithDuplicateValues(): void {
+    /*public function testTryCreateFieldWithDuplicateValues(): void {
         $requestUser = BoringUser::factory()->createOne();
         $duplicateCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
         $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateCollection->name]);
@@ -89,12 +98,12 @@ class CreateEntryTest extends TestCase
     public function testTryCreateFieldWithoutAuthentication(): void {
         $this->postJson(self::CREATE_COLLECTION_ENDPOINT, self::VALID_REQUEST_CONTENT)
             ->assertStatus(Response::HTTP_UNAUTHORIZED);
-    }
+    }*/
 
     /**
      * @dataProvider collectionValidationDataProvider
      */
-    public function testCollectionValidation(array $requestContent, array $expectedJsonStructure): void
+    /*public function testCollectionValidation(array $requestContent, array $expectedJsonStructure): void
     {
         $requestUser = BoringUser::factory()->createOne();
         $response = $this
@@ -141,5 +150,5 @@ class CreateEntryTest extends TestCase
                 'expectedJsonStructure' => ['message', 'errors' => ['is_hidden']],
             ],
         ];
-    }
+    }*/
 }
