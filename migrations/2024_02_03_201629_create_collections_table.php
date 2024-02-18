@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('is_hidden')->default(false);
+            $table->boolean('is_readonly')->default(false);
+            $table->boolean('is_versioned')->default(false);
 
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
