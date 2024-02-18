@@ -72,6 +72,11 @@ class CreateEntryTest extends TestCase
         $this->assertDatabaseCount($requestCollection->name, 1);
     }
 
+    // with required validation
+    // with unique validation
+    // without authentication
+    // without collection
+
     /*public function testTryCreateFieldWithDuplicateValues(): void {
         $requestUser = BoringUser::factory()->createOne();
         $duplicateCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
@@ -85,12 +90,21 @@ class CreateEntryTest extends TestCase
                 'message',
                 'errors',
             ]);
-    }
-
-    public function testTryCreateFieldWithoutAuthentication(): void {
-        $this->postJson(self::CREATE_COLLECTION_ENDPOINT, self::VALID_REQUEST_CONTENT)
-            ->assertStatus(Response::HTTP_UNAUTHORIZED);
     }*/
+
+    public function testTryCreateEntryWithoutAuthentication(): void {
+        $requestCollection = $this->boringTestService->storeTestCollection([], null);
+        $requestField = $this->boringTestService->storeTestField(
+            self::VALID_FIELD_CONTENT,
+            $requestCollection->name,
+            $requestCollection->user_id,
+        );
+
+        $requestUrl = sprintf(self::CREATE_ENTRY_ENDPOINT, $requestCollection->name);
+
+        $this->postJson($requestUrl, [$requestField->name => self::VALID_ENTRY_FIELD_VALUE])
+            ->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
 
     /**
      * @dataProvider collectionValidationDataProvider
