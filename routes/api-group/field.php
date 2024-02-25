@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Sakydev\Boring\Http\Controllers\Api\Collection\Field\FieldController;
+use Sakydev\Boring\Http\Controllers\Api\Collection\FieldController;
 
 Route::prefix('/collections/{collectionName}/fields')->middleware(['auth:sanctum'])->group(function() {
     Route::get('/', [FieldController::class, 'index'])->name('field.index');

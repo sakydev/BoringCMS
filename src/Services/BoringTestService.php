@@ -33,7 +33,7 @@ class BoringTestService
 
         $content = [
             'name' => $content['name'] ?? fake()->bothify('??????????'),
-            'field_type' => $content['description'] ?? array_rand(Field::SUPPORTED_TYPES),
+            'field_type' => $content['field_type'] ?? array_rand(Field::SUPPORTED_TYPES),
             'is_required' => $content['is_hidden'] ?? fake()->boolean(),
         ];
 

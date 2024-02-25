@@ -28,14 +28,13 @@ class CreateFieldRequest extends FormRequest
                 'boolean',
             ],
             'validation' => [
-                'sometimes',
-                'required',
-                'json',
+                'nullable',
+                'array',
+                new FieldValidationsRule,
             ],
             'condition' => [
-                'sometimes',
-                'required',
-                'json',
+                'nullable',
+                'array',
             ],
         ];
     }

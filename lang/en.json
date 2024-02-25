@@ -32,7 +32,8 @@
                 "notFound": "Collection not found",
                 "invalidAccessPermissions": "User has insufficient permissions to access collection",
                 "invalidCreatePermissions": "User has insufficient permissions to create collection",
-                "invalidUpdatePermissions": "User has insufficient permissions to update collection"
+                "invalidUpdatePermissions": "User has insufficient permissions to update collection",
+                "readOnly": "Collection is read only"
             },
             "collectionEntry": {
                 "notFound": "Collection entry not found",
@@ -40,7 +41,8 @@
             },
             "field": {
                 "notFound": "Field not found",
-                "invalidUUID": "User provided invalid field UUID"
+                "invalidUUID": "User provided invalid field UUID",
+                "alreadyExists": "Field already exists"
             },
             "form": {
                 "notFound": "Form not found",
