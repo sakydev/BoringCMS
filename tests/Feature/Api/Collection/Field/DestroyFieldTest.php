@@ -5,7 +5,6 @@ namespace Feature\Api\Collection\Field;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
-use Sakydev\Boring\Models\Field;
 use Sakydev\Boring\Services\BoringTestService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;

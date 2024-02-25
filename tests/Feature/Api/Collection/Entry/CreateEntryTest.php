@@ -3,10 +3,7 @@
 namespace Feature\Api\Collection\Entry;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Schema;
 use Sakydev\Boring\Models\BoringUser;
-use Sakydev\Boring\Models\Collection;
 use Sakydev\Boring\Models\Field;
 use Sakydev\Boring\Services\BoringTestService;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,22 +71,6 @@ class CreateEntryTest extends TestCase
 
     // with required validation
     // with unique validation
-    // without collection
-
-    /*public function testTryCreateFieldWithDuplicateValues(): void {
-        $requestUser = BoringUser::factory()->createOne();
-        $duplicateCollection = Collection::factory()->createOne(['created_by' => $requestUser->id]);
-        $requestContent = array_merge(self::VALID_REQUEST_CONTENT, ['name' => $duplicateCollection->name]);
-
-        $response = $this->actingAs($requestUser)
-            ->postJson(self::CREATE_COLLECTION_ENDPOINT, $requestContent);
-
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertJsonStructure([
-                'message',
-                'errors',
-            ]);
-    }*/
 
     public function testTryCreateEntryWithoutCollection(): void {
         $requestUser = BoringUser::factory()->createOne();
