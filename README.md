@@ -1,6 +1,8 @@
 # BoringCMS
 Simple headless CMS for modern world
 
+# ALL THE BELOW INFO IS ACTUALLY OUTDATED (Sorry :)
+
 # API Endpoints
 ### General information
 - All items inside {} are `slug` for respective endpoint/feature
