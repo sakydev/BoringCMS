@@ -1,6 +1,12 @@
 # BoringCMS
 Simple headless CMS for modern world
 
+I would start with [src](https://github.com/sakydev/BoringCMS/tree/master/src)
+
+The slightly more developed features are entries and collections [here](https://github.com/sakydev/BoringCMS/tree/master/src/Http/Controllers/Api/Collection)
+
+Tests are [here](https://github.com/sakydev/BoringCMS/tree/master/tests/Feature/Api/Collection)
+
 # ALL THE BELOW INFO IS ACTUALLY OUTDATED (Sorry :)
 
 # API Endpoints
