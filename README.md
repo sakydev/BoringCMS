@@ -13,12 +13,12 @@ cd packages
 git clone git@github.com:sakydev/BoringCMS.git
 ```
 
-Then include following line in Laravel's composer.json under `require` section
+Then include following line in Laravel's composer.json under `require` section   
 `"sakydev/boring": "*"`
 
 Run `composer install` and you should be good
 
 ### Tests
-You may run tests by running
+You may run tests by running   
 `./vendor/bin/phpunit packages/sakydev/boring/tests`
 
