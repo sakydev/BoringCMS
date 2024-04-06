@@ -1,4 +1,6 @@
 # BoringCMS
+![PHP](https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white) ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white) ![PHPUnit](https://img.shields.io/badge/PHPUnit-5468FF?logo=php&logoColor=white)
+
 Simple headless CMS for modern world built as Laravel package for seamless integration into your app
 
 This is a work in progress. You're welcome to explore and play around but please some bumps during exploration.
